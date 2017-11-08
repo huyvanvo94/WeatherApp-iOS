@@ -15,6 +15,11 @@
 		8F13D2AE1FAD34C1001BC21C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F13D2AC1FAD34C1001BC21C /* LaunchScreen.storyboard */; };
 		8F13D2B91FAD34C2001BC21C /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13D2B81FAD34C2001BC21C /* WeatherAppTests.swift */; };
 		8F13D2C41FAD34C2001BC21C /* WeatherAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13D2C31FAD34C2001BC21C /* WeatherAppUITests.swift */; };
+		8F13D2D21FAD4997001BC21C /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13D2D11FAD4997001BC21C /* Weather.swift */; };
+		8FC009771FB36F1600365C33 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC009761FB36F1600365C33 /* Helper.swift */; };
+		8FC009791FB3701D00365C33 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC009781FB3701D00365C33 /* Service.swift */; };
+		8FC0097B1FB3703400365C33 /* TimeZone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC0097A1FB3703400365C33 /* TimeZone.swift */; };
+		8FC0097D1FB37F1100365C33 /* AddCity.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8FC0097C1FB37F1100365C33 /* AddCity.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +54,11 @@
 		8F13D2BF1FAD34C2001BC21C /* WeatherAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F13D2C31FAD34C2001BC21C /* WeatherAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppUITests.swift; sourceTree = "<group>"; };
 		8F13D2C51FAD34C2001BC21C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F13D2D11FAD4997001BC21C /* Weather.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		8FC009761FB36F1600365C33 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		8FC009781FB3701D00365C33 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		8FC0097A1FB3703400365C33 /* TimeZone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeZone.swift; sourceTree = "<group>"; };
+		8FC0097C1FB37F1100365C33 /* AddCity.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = AddCity.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +110,15 @@
 			isa = PBXGroup;
 			children = (
 				8F13D2A01FAD34C1001BC21C /* AppDelegate.swift */,
-				8F13D2A21FAD34C1001BC21C /* ViewController.swift */,
+				8FC009711FB36BEB00365C33 /* View */,
+				8FC009721FB36BF600365C33 /* Controller */,
+				8FC009731FB36BFD00365C33 /* Model */,
 				8F13D2A41FAD34C1001BC21C /* Main.storyboard */,
 				8F13D2AA1FAD34C1001BC21C /* Assets.xcassets */,
 				8F13D2AC1FAD34C1001BC21C /* LaunchScreen.storyboard */,
 				8F13D2AF1FAD34C1001BC21C /* Info.plist */,
 				8F13D2A71FAD34C1001BC21C /* WeatherApp.xcdatamodeld */,
+				8FC0097C1FB37F1100365C33 /* AddCity.storyboard */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -126,6 +139,32 @@
 				8F13D2C51FAD34C2001BC21C /* Info.plist */,
 			);
 			path = WeatherAppUITests;
+			sourceTree = "<group>";
+		};
+		8FC009711FB36BEB00365C33 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		8FC009721FB36BF600365C33 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8F13D2A21FAD34C1001BC21C /* ViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		8FC009731FB36BFD00365C33 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8F13D2D11FAD4997001BC21C /* Weather.swift */,
+				8FC0097A1FB3703400365C33 /* TimeZone.swift */,
+				8FC009761FB36F1600365C33 /* Helper.swift */,
+				8FC009781FB3701D00365C33 /* Service.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +280,7 @@
 				8F13D2AE1FAD34C1001BC21C /* LaunchScreen.storyboard in Resources */,
 				8F13D2AB1FAD34C1001BC21C /* Assets.xcassets in Resources */,
 				8F13D2A61FAD34C1001BC21C /* Main.storyboard in Resources */,
+				8FC0097D1FB37F1100365C33 /* AddCity.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,9 +305,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F13D2D21FAD4997001BC21C /* Weather.swift in Sources */,
 				8F13D2A91FAD34C1001BC21C /* WeatherApp.xcdatamodeld in Sources */,
+				8FC009771FB36F1600365C33 /* Helper.swift in Sources */,
+				8FC0097B1FB3703400365C33 /* TimeZone.swift in Sources */,
 				8F13D2A31FAD34C1001BC21C /* ViewController.swift in Sources */,
 				8F13D2A11FAD34C1001BC21C /* AppDelegate.swift in Sources */,
+				8FC009791FB3701D00365C33 /* Service.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +564,7 @@
 				8F13D2CA1FAD34C2001BC21C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8F13D2CB1FAD34C2001BC21C /* Build configuration list for PBXNativeTarget "WeatherAppTests" */ = {
 			isa = XCConfigurationList;
@@ -528,6 +573,7 @@
 				8F13D2CD1FAD34C2001BC21C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8F13D2CE1FAD34C2001BC21C /* Build configuration list for PBXNativeTarget "WeatherAppUITests" */ = {
 			isa = XCConfigurationList;
@@ -536,6 +582,7 @@
 				8F13D2D01FAD34C2001BC21C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

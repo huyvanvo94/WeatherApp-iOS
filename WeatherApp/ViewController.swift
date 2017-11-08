@@ -8,18 +8,49 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIPageViewController, UIPageViewControllerDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        print("ViewController viewDidLoad")
+        asyn_fetch()
+        
+        
+    
+    }
+    
+    func asyn_fetch(){
+        let queue = OperationQueue()
+        queue.addOperation {
+            
+            ApiFetcher.fetchWeather(latlng: "lat=37.7652065&lon=-122.2416355",
+                                   completion: {(data: Data) -> Void in
+                                                        print(data)})
+        }
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+ 
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        
+        return nil
+        
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
+        
+        return nil
+        
+    }
+   
+    
 
 }
 
