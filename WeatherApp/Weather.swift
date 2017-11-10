@@ -66,6 +66,16 @@ class WeatherModel: NSObject{
         }
     }
     
+    // a variable to print out about class
+    override var description: String{
+        return ""
+    }
+}
+/**
+ * A simple class to contain weather data
+ */
+class WeatherContainer{
+    
     
 }
 

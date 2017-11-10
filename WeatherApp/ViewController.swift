@@ -17,7 +17,6 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
         asyn_fetch()
         
         
-    
     }
     
     func asyn_fetch(){
@@ -33,7 +32,7 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+     
     }
     
  
@@ -49,8 +48,6 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
         return nil
         
     }
-   
     
-
 }
 
