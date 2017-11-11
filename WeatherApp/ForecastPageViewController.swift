@@ -16,13 +16,33 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         self.delegate = self
         self.dataSource = self
         
-        let p1: WeatherViewController = storyboard?.instantiateViewController(withIdentifier: "p1") as! WeatherViewController
-        let p2: WeatherViewController = storyboard?.instantiateViewController(withIdentifier: "p1") as! WeatherViewController
+        let app = UIApplication.shared.delegate as! AppDelegate
         
-        pages.append(p1)
-        pages.append(p2)
- 
-        setViewControllers([p1], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
+        let cities = app.cities
+        
+        for city in cities{
+            let page = createCityForecastPage(city: city)
+            
+            pages.append(page)
+            
+        }
+        
+      
+        setViewControllers([pages[0]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
+    }
+    
+    func createCityForecastPage(city: String) -> CityForecastPageController{
+        let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
+        
+        let weatherModel: WeatherModel = WeatherModel()
+        
+        weatherModel.city = city
+        
+        page.weatherModel = weatherModel
+        
+        
+        return page
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,8 +74,13 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         let nxt = abs((cur + 1) % pages.count)
         return pages[nxt]
     }
+    
     func presentationIndex(for pageViewController: UIPageViewController)-> Int {
         return pages.count
+    }
+    
+    func emptyPage(){
+        
     }
     /*
     // MARK: - Navigation

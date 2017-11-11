@@ -8,12 +8,18 @@
 
 import UIKit
 
-class WeatherViewController: UIViewController {
+class CityForecastPageController: UIViewController {
 
+    // weather model cannot be null
+    var weatherModel: WeatherModel!
+    
+    @IBOutlet weak var cityName: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+ 
+        cityName.text = weatherModel.city
+        
+        self.view.backgroundColor = UIColor.blue
     }
 
     override func didReceiveMemoryWarning() {
