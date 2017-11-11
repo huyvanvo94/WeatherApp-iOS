@@ -24,12 +24,17 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     }
     
     @IBAction func addCity(_ sender: UIBarButtonItem) {
+        searchAndAddCity()
+    }
+    
+    func searchAndAddCity() {
         let autocompleteController = GMSAutocompleteViewController()
         let filterByCity = GMSAutocompleteFilter()
         filterByCity.type = .city
         autocompleteController.autocompleteFilter = filterByCity
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -59,17 +64,13 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         if editingStyle == .delete {
             deleteAtIndex = indexPath
             if let index = deleteAtIndex?.row{
-                
                 confirmDelete(city: cities[index])
             }
-            
-            
         }
     }
     
     func confirmDelete(city: String){
         let alert = UIAlertController(title: "Delete City", message: "Are you sure you want to delete \(city)?",  preferredStyle: .actionSheet)
-        
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteCity)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelDelete)
         alert.addAction(deleteAction)
