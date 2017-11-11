@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct LatLon{
+    var lat: Double!
+    var lon: Double!
+}
 
 class WeatherModel: NSObject{
     
