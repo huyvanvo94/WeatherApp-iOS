@@ -103,13 +103,33 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
         
         // to update the UI
-        FetchWeatherEvent(city: city, latlon: latlon).asyncFetch(completion: postToUI)
-        FetchForecastEvent(city: city, latlon: latlon).asyncFetch(completion: nil)
-        FetchThreeHoursForecastEvent(city: city, latlon: latlon).asyncFetch(completion: nil)
+        FetchWeatherEvent(city: city, latlon: latlon).asyncFetch(
+            completion: {(weatherModel: WeatherModel) -> Void in
+                
+                let container = TodayWeatherContainer.shared
+                container.add(location: latlon, weatherModel: weatherModel)
+                
+                OperationQueue.main.addOperation {
+                    self.postToUI(weather: weatherModel)
+                }
+        })
+        
+        FetchForecastEvent(city: city, latlon: latlon).asyncFetch(completion: {(weatherModels: [WeatherModel]) -> Void in
+            let container = ForecastContainer.shared
+            container.add(location: latlon, weatherModel: weatherModels)
+            
+        })
+        
+        
+        FetchThreeHoursForecastEvent(city: city, latlon: latlon).asyncFetch(completion:  {(weatherModels: [WeatherModel]) -> Void in
+            let container = ThreeHoursForecastContainer.shared
+            container.add(location: latlon, weatherModels: weatherModels)
+        })
         
         dismiss(animated: true, completion: nil)
     }
-    
+ 
+    // p
     func postToUI(weather: WeatherModel){
         print("postToUI \(weather.city!)")
         

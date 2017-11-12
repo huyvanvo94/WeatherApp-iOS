@@ -8,6 +8,14 @@
 
 import Foundation
 
+protocol WeatherEvent {
+    func asyncFetch()
+}
+
+class EventQueue{
+    
+}
+
 class FetchThreeHoursForecastEvent{
     
     let city: String
@@ -19,10 +27,10 @@ class FetchThreeHoursForecastEvent{
         
     }
     
-    func asyncFetch(completion: (  ([WeatherModel]) -> () )?){
+    func asyncFetch(completion: ( ([WeatherModel]) -> () )?){
         let queue = OperationQueue()
         queue.addOperation {
-            let location = "lat=\(self.latlon.latitude)&lon=\(self.latlon.longitude)"
+            let location = self.latlon.openWeatherLocation
             ApiService.fetchThreeHours(latlng: location, completion: {
                 (weatherModels: [WeatherModel]) -> Void in
                 
@@ -50,7 +58,7 @@ class FetchForecastEvent{
         let queue = OperationQueue()
         queue.addOperation {
             // string format for weather
-            let location = "lat=\(self.latlon.latitude)&lon=\(self.latlon.longitude)"
+            let location = self.latlon.openWeatherLocation
             
             ApiService.fetchForecast(latlng: location, completion: {
                 (weatherModels: [WeatherModel]) -> Void in
@@ -71,7 +79,7 @@ class FetchForecastEvent{
     
 }
 
-
+// event to event today's weather
 class FetchWeatherEvent{
     
     let city: String
@@ -88,19 +96,21 @@ class FetchWeatherEvent{
         queue.addOperation {
         
             // string format for weather
-            let location = "lat=\(self.latlon.latitude)&lon=\(self.latlon.longitude)"
+            let location = self.latlon.openWeatherLocation
+                
             ApiService.fetchWeather(latlng: location, completion:
                 {(weatherModel: WeatherModel) -> Void in
-                    print("Complete fetching weather")
+                    
                     
                     weatherModel.city = self.city
-                    
-                    let location = "\(self.latlon.latitude),\(self.latlon.longitude)"
+             
+                    let location = self.latlon.googleLocation
                     ApiService.fetchTimeZone(googleFormatted: location, completion: {
                         (timeModel: TimeModel) -> Void in
                         weatherModel.time_zone_id = timeModel.timeZoneId
-                        
+                       
                         if let completion = completion{
+                           
                             
                             completion(weatherModel)
                         }

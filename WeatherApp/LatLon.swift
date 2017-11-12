@@ -8,7 +8,15 @@
 
 import Foundation
 
-struct LatLon{
+protocol LocationFormat {
+    var openWeatherLocation: String { get }
+    
+    var googleLocation: String { get  }
+}
+
+struct LatLon: LocationFormat{
+  
+
     let latitude: Double
     let longitude: Double
     
@@ -16,8 +24,28 @@ struct LatLon{
         self.latitude = latitude
         self.longitude = longitude
     }
-    // Implement Equatable
+    
+    var googleLocation: String{
+        get{
+            return "\(self.latitude),\(self.longitude)"
+        }
+    }
+    
+    var openWeatherLocation: String{
+        get{
+            return "lat=\(self.latitude)&lon=\(self.longitude)"
+        }
+    }
+    
+    
+}
 
+extension LatLon: Hashable{
+    // hash protocol
+    var hashValue: Int{
+        return latitude.hashValue ^ longitude.hashValue &* 16777619
+    }
+    // Implement Equatable
     static func ==(lhs:LatLon, rhs:LatLon) -> Bool {
         return lhs.latitude == rhs.latitude && lhs.longitude == rhs.longitude
     }

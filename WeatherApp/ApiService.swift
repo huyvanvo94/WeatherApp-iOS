@@ -14,7 +14,6 @@ struct ApiService{
     static let googleTimeZoneKey = "AIzaSyD2E7_ssLZXS_SQLlNH6kzBodXkYe6MOhU"
     
     static func fetchTimeZone(googleFormatted location: String, completion: ((TimeModel) -> () )?){
-        print("fetchTimeZone")
         let url = "https://maps.googleapis.com/maps/api/timezone/json?location=\(location)&timestamp=\(NSDate().timeIntervalSince1970)&key=\(googleTimeZoneKey)"
         
         print("url: \(url)")
@@ -28,13 +27,14 @@ struct ApiService{
             
             let task = session.dataTask(with: urlRequest){
                 (data, response, error) -> Void in
-                print("Api Fetcher task")
-                if let theHttpResponse = response as? HTTPURLResponse{
+         
+                if let httpResponse = response as? HTTPURLResponse{
                     // request has been successful
-                    if theHttpResponse.statusCode == 200 {
-                        
+                   
+                    if httpResponse.statusCode == 200 {
                         
                         if let data = data{
+                           
                             if let timeModel = JsonParser.parseTime(data: data){
                                 if let completion = completion{
                                     completion(timeModel)
@@ -68,6 +68,7 @@ struct ApiService{
                         if let data = data{
                             if let weatherModels = JsonParser.parseThreeHours(data: data){
                                 if let completion = completion{
+                                    
                                     completion(weatherModels)
                                 }
                             }
@@ -94,11 +95,10 @@ struct ApiService{
             
             let task = session.dataTask(with: urlRequest){
                 (data, response, error) -> Void in
-                print("Api Fetcher task")
+               
                 if let httpResponse = response as? HTTPURLResponse{
                     // request has been successful
                     if httpResponse.statusCode == 200 {
-                        
                         if let data = data{
                             if let weatherModels = JsonParser.parseForecast(data: data){
                                 if let completion = completion{
@@ -138,7 +138,7 @@ struct ApiService{
                     if theHttpResponse.statusCode == 200 {
                         
                         if let data = data{
-                            if let weatherModel = JsonParser.parseWeather(data: data){
+                            if let weatherModel = JsonParser.parseWeather(today: data){
                                 if let completion = completion{
                                     completion(weatherModel)
                                 }

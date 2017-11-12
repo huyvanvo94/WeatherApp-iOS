@@ -26,8 +26,8 @@ struct JsonParser{
         return weatherModels
     }
 
-    static func parseWeather(data: Data) -> WeatherModel?{
-        
+    static func parseWeather(today data: Data) -> WeatherModel?{
+        print("parse today weather data")
         do{
             let weather = WeatherModel()
             
@@ -56,7 +56,7 @@ struct JsonParser{
     
         do{
             let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
-            print(json)
+            //print(json)
             let weatherModels = [WeatherModel]()
         
             
@@ -68,6 +68,7 @@ struct JsonParser{
     }
     
     static func parseTime(data: Data) -> TimeModel?{
+        print("parseTime")
         do{
             let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
           
