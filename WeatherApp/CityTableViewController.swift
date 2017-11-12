@@ -22,11 +22,11 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
    
        
     }
-    
-    @IBAction func addCity(_ sender: UIBarButtonItem) {
+ 
+    @IBAction func searchCity(_ sender: UIBarButtonItem) {
+        
         searchAndAddCity()
     }
-    
     func searchAndAddCity() {
         let autocompleteController = GMSAutocompleteViewController()
         let filterByCity = GMSAutocompleteFilter()
@@ -93,16 +93,28 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     }
     // Handle the user's selection.
     public func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print("Place name: \(place.name)")
-        print("Place address: \(place.formattedAddress)")
-        print("lat long:\(place.coordinate)")
-        print("Place attributions: \(place.attributions)")
-        
+      
         cities.append(place.name)
         self.tableView.reloadData()
         
+        // name of the city
+        let city = place.name
+        
+        let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
+        
+        // to update the UI
+        FetchWeatherEvent(city: city, latlon: latlon).asyncFetchWeather(completion: postToUI)
+        FetchForecastEvent(city: city, latlon: latlon).asyncFetchForecast(completion: nil)
+        
         
         dismiss(animated: true, completion: nil)
+    }
+    
+    func postToUI(weather: WeatherModel){
+        print("postToUI \(weather.city!)")
+        
+        
+        
     }
     
     public func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {

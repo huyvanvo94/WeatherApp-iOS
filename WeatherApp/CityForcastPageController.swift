@@ -17,7 +17,7 @@ class CityForecastPageController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
  
-        cityName.text = weatherModel.city
+        //cityName.text = weatherModel.city
         
         self.view.backgroundColor = UIColor.blue
     }

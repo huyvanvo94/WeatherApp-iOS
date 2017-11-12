@@ -12,9 +12,11 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     var pages = [UIViewController]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("ForecastPageView viewDidLoad")
 
         self.delegate = self
         self.dataSource = self
+  
         
         let app = UIApplication.shared.delegate as! AppDelegate
         
@@ -30,6 +32,8 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
       
         setViewControllers([pages[0]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
     }
+    
+    
     
     func createCityForecastPage(city: String) -> CityForecastPageController{
         let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController

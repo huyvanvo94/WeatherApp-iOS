@@ -14,20 +14,10 @@ class ViewController: UIPageViewController, UIPageViewControllerDataSource {
         super.viewDidLoad()
         
         print("ViewController viewDidLoad")
-        asyn_fetch()
-        
         
     }
     
-    func asyn_fetch(){
-        let queue = OperationQueue()
-        queue.addOperation {
-            
-            ApiFetcher.fetchWeather(latlng: "lat=37.7652065&lon=-122.2416355",
-                                   completion: {(data: Data) -> Void in
-                                                        print(data)})
-        }
-    }
+   
 
     
     override func didReceiveMemoryWarning() {

@@ -17,9 +17,29 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="Ji7-4K-J1C">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <items>
+                                <navigationItem title="Title" id="TkW-Xm-EBz">
+                                    <barButtonItem key="leftBarButtonItem" title="&lt;-" id="Bpl-2g-KDg">
+                                        <connections>
+                                            <segue destination="TkP-49-a3k" kind="popoverPresentation" popoverAnchorBarButtonItem="Bpl-2g-KDg" id="gBX-2Y-BLj">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" title="+" id="Xyy-Zy-FUe">
+                                        <connections>
+                                            <action selector="searchCity:" destination="0O4-Bu-9vh" id="a4y-xo-90i"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </navigationItem>
+                            </items>
+                        </navigationBar>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LabelCell" id="F8f-ht-ubX">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F8f-ht-ubX" id="75r-Ux-yqY">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
@@ -51,23 +71,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hxf-VL-bzh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1055.2" y="-93.103448275862078"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Jbs-fp-MzH">
-            <objects>
-                <navigationController id="r1p-2s-f8V" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="777-vB-50n">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="0O4-Bu-9vh" kind="relationship" relationship="rootViewController" id="uCj-fZ-oqR"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="4MK-WZ-WE3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1886" y="-93"/>
+            <point key="canvasLocation" x="-2156" y="-119"/>
         </scene>
         <!--Forecast Page View Controller-->
         <scene sceneID="pZZ-s0-tno">
@@ -75,7 +79,7 @@
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="VaQ-2U-BZO" customClass="ForecastPageViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhL-1x-TQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3270" y="-958"/>
+            <point key="canvasLocation" x="-3956" y="-119"/>
         </scene>
         <!--City Forecast Page Controller-->
         <scene sceneID="kbf-NW-NcX">
@@ -89,27 +93,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="City" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G3u-2b-q6P">
-                                <rect key="frame" x="172" y="66" width="31" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="1Vf-fc-Egd">
                                 <rect key="frame" x="172" y="622" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pageControl>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PEH-fj-C3q">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="City" id="hHW-kV-r9T">
+                                        <barButtonItem key="leftBarButtonItem" title="settings" id="iT9-yY-SxP"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Add City" id="dgd-5d-sDa">
+                                            <connections>
+                                                <segue destination="0O4-Bu-9vh" kind="show" id="rQr-CZ-96c"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <outlet property="cityName" destination="G3u-2b-q6P" id="zy2-uL-G48"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lPB-SC-s7H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2311.1999999999998" y="-1422.6386806596702"/>
+            <point key="canvasLocation" x="-3161" y="-119"/>
         </scene>
     </scenes>
 </document>
