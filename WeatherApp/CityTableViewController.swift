@@ -103,9 +103,9 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
         
         // to update the UI
-        FetchWeatherEvent(city: city, latlon: latlon).asyncFetchWeather(completion: postToUI)
-        FetchForecastEvent(city: city, latlon: latlon).asyncFetchForecast(completion: nil)
-        
+        FetchWeatherEvent(city: city, latlon: latlon).asyncFetch(completion: postToUI)
+        FetchForecastEvent(city: city, latlon: latlon).asyncFetch(completion: nil)
+        FetchThreeHoursForecastEvent(city: city, latlon: latlon).asyncFetch(completion: nil)
         
         dismiss(animated: true, completion: nil)
     }

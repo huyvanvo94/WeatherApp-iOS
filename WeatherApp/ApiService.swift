@@ -49,12 +49,42 @@ struct ApiService{
 
         }
     }
-    static func fetchThreeHours(){
+    static func fetchThreeHours(latlng location: String, completion: (([WeatherModel]) -> () )?){
+        let url = "http://api.openweathermap.org/data/2.5/forecast?\(location)&mode=json&units=imperial&cnt=8&appid=\(openWeatherMapKey)"
         
+        let requestURL = URL(string: url)
+        
+        if let theRequestURL = requestURL{
+            let urlRequest = URLRequest(url: theRequestURL)
+            let session = URLSession.shared
+            
+            let task = session.dataTask(with: urlRequest){
+                (data, response, error) -> Void in
+           
+                if let httpResponse = response as? HTTPURLResponse{
+                    // request has been successful
+                    if httpResponse.statusCode == 200 {
+                        
+                        if let data = data{
+                            if let weatherModels = JsonParser.parseThreeHours(data: data){
+                                if let completion = completion{
+                                    completion(weatherModels)
+                                }
+                            }
+                            
+                        }
+                        
+                    }
+                }
+            }
+            
+            task.resume()
+        }
+
     }
     
     static func fetchForecast(latlng location: String, completion: (([WeatherModel]) -> () )?){
-        let url = "http://api.openweathermap.org/data/2.5/forecast?\(location)&mode=json&units=imperial&cnt=8&appid=\(openWeatherMapKey)"
+        let url = "http://api.openweathermap.org/data/2.5/forecast/daily?\(location)&mode=json&units=imperial&cnt=7&appid=\(openWeatherMapKey)"
         
         let requestURL = URL(string: url)
         

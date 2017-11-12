@@ -8,6 +8,32 @@
 
 import Foundation
 
+class FetchThreeHoursForecastEvent{
+    
+    let city: String
+    let latlon: LatLon
+    
+    init(city: String, latlon: LatLon){
+        self.city = city
+        self.latlon = latlon
+        
+    }
+    
+    func asyncFetch(completion: (  ([WeatherModel]) -> () )?){
+        let queue = OperationQueue()
+        queue.addOperation {
+            let location = "lat=\(self.latlon.latitude)&lon=\(self.latlon.longitude)"
+            ApiService.fetchThreeHours(latlng: location, completion: {
+                (weatherModels: [WeatherModel]) -> Void in
+                
+                
+                if let completion = completion{
+                    completion(weatherModels)
+                }
+            })
+        }
+    }
+}
 
 class FetchForecastEvent{
     let city: String
@@ -19,7 +45,7 @@ class FetchForecastEvent{
     }
  
     
-    func asyncFetchForecast(completion: (  ([WeatherModel]) -> () )?){
+    func asyncFetch(completion: (  ([WeatherModel]) -> () )?){
         
         let queue = OperationQueue()
         queue.addOperation {
@@ -29,7 +55,7 @@ class FetchForecastEvent{
             ApiService.fetchForecast(latlng: location, completion: {
                 (weatherModels: [WeatherModel]) -> Void in
                 print("Finish fetching forecast")
-                
+
                 
                 if let completion = completion{
                     completion(weatherModels)
@@ -56,7 +82,7 @@ class FetchWeatherEvent{
         self.latlon = latlon
     }
     
-    func asyncFetchWeather(completion: ((WeatherModel) -> () )?){
+    func asyncFetch(completion: ((WeatherModel) -> () )?){
         
         let queue = OperationQueue()
         queue.addOperation {

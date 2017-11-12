@@ -20,7 +20,7 @@ struct JsonHelper{
 
 // parse json to models
 struct JsonParser{
-    static func parseThreeHoursWeather() -> Array<WeatherModel> {
+    static func parseThreeHours(data: Data) -> [WeatherModel]? {
         let weatherModels = [WeatherModel]()
         
         return weatherModels

@@ -29,9 +29,7 @@ class WeatherAppTests: XCTestCase {
          
     }
     
-    func foo(s: String){
-        
-    }
+     
     
     func testPerformanceExample() {
         // This is an example of a performance test case.
