@@ -18,8 +18,8 @@ protocol ProcessEvent {
 }
 // A ViewController needs to implement this
 protocol ProcessDelegate {
-    func error(event: Event)
-    func complete(event: Event)
+    func error(_ event: Event)
+    func complete(_ event: Event)
     
 }
  

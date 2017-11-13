@@ -11,11 +11,12 @@ import UIKit
 class CityForecastPageController: UIViewController {
 
     // weather model cannot be null
-    var weatherModel: WeatherModel!
+    var today: WeatherModel!
     
     @IBOutlet weak var cityName: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("CityForecastPageController viewDidLoad")
  
         //cityName.text = weatherModel.city
         

@@ -14,7 +14,7 @@ struct ApiService{
     static let googleTimeZoneKey = "AIzaSyD2E7_ssLZXS_SQLlNH6kzBodXkYe6MOhU"
     
     static func fetchTimeZone(googleFormatted location: String, completion: ((TimeModel) -> () )?){
-        let url = "https://maps.googleapis.com/maps/api/timezone/json?location=\(location)&timestamp=\(NSDate().timeIntervalSince1970)&key=\(googleTimeZoneKey)"
+        let url = "https://maps.googleapis.com/maps/api/timezone/json?location=\(location)&timestamp=\(Date().timeIntervalSince1970)&key=\(googleTimeZoneKey)"
         
         print("url: \(url)")
         

@@ -27,16 +27,15 @@ class FetchThreeHoursForecastEvent{
         
     }
     
-    func asyncFetch(completion: ( ([WeatherModel]) -> () )?){
+    func asyncFetch( completion: ( ([WeatherModel]) -> () )?){
         let queue = OperationQueue()
         queue.addOperation {
             let location = self.latlon.openWeatherLocation
             ApiService.fetchThreeHours(latlng: location, completion: {
                 (weatherModels: [WeatherModel]) -> Void in
                 
-                
-                if let completion = completion{
-                    completion(weatherModels)
+                if let _ = completion{
+                    completion!(weatherModels)
                 }
             })
         }
@@ -53,7 +52,7 @@ class FetchForecastEvent{
     }
  
     
-    func asyncFetch(completion: (  ([WeatherModel]) -> () )?){
+    func asyncFetch( completion: (  ([WeatherModel]) -> () )?){
         
         let queue = OperationQueue()
         queue.addOperation {
@@ -65,8 +64,8 @@ class FetchForecastEvent{
                 print("Finish fetching forecast")
 
                 
-                if let completion = completion{
-                    completion(weatherModels)
+                if let _ = completion{
+                    completion!(weatherModels)
                 }
                 
             })
@@ -90,7 +89,7 @@ class FetchWeatherEvent{
         self.latlon = latlon
     }
     
-    func asyncFetch(completion: ((WeatherModel) -> () )?){
+    func asyncFetch( completion: ((WeatherModel) -> () )?){
         
         let queue = OperationQueue()
         queue.addOperation {
@@ -109,12 +108,9 @@ class FetchWeatherEvent{
                         (timeModel: TimeModel) -> Void in
                         weatherModel.time_zone_id = timeModel.timeZoneId
                        
-                        if let completion = completion{
-                           
-                            
-                            completion(weatherModel)
+                        if let _ = completion{
+                            completion!(weatherModel)
                         }
-                    
                     })
                     
                     

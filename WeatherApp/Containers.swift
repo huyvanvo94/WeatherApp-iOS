@@ -16,7 +16,7 @@ class ThreeHoursForecastContainer{
     
     static let shared = ThreeHoursForecastContainer()
     
-    private init(){}
+    fileprivate init(){}
     
     func add(location latlon: LatLon, weatherModels: [WeatherModel]){
         
@@ -30,7 +30,7 @@ class ThreeHoursForecastContainer{
         
         init(threehours weatherModels: [WeatherModel]){
             self.weatherModels = weatherModels
-            self.timestamp = NSDate().timeIntervalSince1970
+            self.timestamp = Date().timeIntervalSince1970
         }
     }
 }
@@ -38,7 +38,7 @@ class ThreeHoursForecastContainer{
 class ForecastContainer{
     static let shared = ForecastContainer()
     
-    private init(){}
+    fileprivate init(){}
     
     
     func add(location latlon: LatLon, weatherModel: [WeatherModel]){
@@ -52,21 +52,21 @@ class ForecastContainer{
 class TodayWeatherContainer{
     static let shared = TodayWeatherContainer()
     
-    private var data = [LatLon: WeatherModel]()
-    private init(){}
+    var dict = [LatLon: TodayWeatherPackage]()
+    fileprivate init(){}
     
     // add to dictionary
     func add(location latlon: LatLon, weatherModel: WeatherModel ){
-        data[latlon] = weatherModel
+        dict[latlon] = TodayWeatherPackage(today: weatherModel)
     }
     
     // remove from dictionary
-    func remove(location latlon: LatLon ){
-        data[latlon] = nil
+    func remove(location latlon: LatLon){
+        dict[latlon] = nil
     }
     
     func fetch(with location: LatLon) -> WeatherModel?{
-        return data[location]
+        return dict[location]?.weatherModel
     }
     
     
@@ -76,7 +76,7 @@ class TodayWeatherContainer{
         
         init(today weatherModel: WeatherModel){
             self.weatherModel = weatherModel
-            self.timestamp = NSDate().timeIntervalSince1970
+            self.timestamp = Date().timeIntervalSince1970
             
         }
         
@@ -92,11 +92,11 @@ class Cities{
 
 
 class LatLonContainer{
-    private var locations = [LatLon]()
+    fileprivate var locations = [LatLon]()
     
     static let shared = LatLonContainer()
     
-    private init(){}
+    fileprivate init(){}
     
     
     func add(location latlon: LatLon!){

@@ -22,6 +22,8 @@
 		8F2553781FB827B5000BD0A6 /* LatLon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2553771FB827B5000BD0A6 /* LatLon.swift */; };
 		8F25537A1FB8281C000BD0A6 /* Containers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2553791FB8281C000BD0A6 /* Containers.swift */; };
 		8F25537C1FB82D61000BD0A6 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F25537B1FB82D61000BD0A6 /* Event.swift */; };
+		8F3060131FB96B1300CF50FF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3060121FB96B1300CF50FF /* User.swift */; };
+		8F3060151FB972D200CF50FF /* EmptyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3060141FB972D200CF50FF /* EmptyViewController.swift */; };
 		8F31F7A21FB6665600C4CEE3 /* CityTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31F7A11FB6665600C4CEE3 /* CityTableViewController.swift */; };
 		8F31F7A61FB66AFA00C4CEE3 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31F7A51FB66AFA00C4CEE3 /* Date.swift */; };
 		8F31F7A81FB66B5600C4CEE3 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F31F7A71FB66B5600C4CEE3 /* CityTableViewCell.swift */; };
@@ -33,6 +35,8 @@
 		8FD2FCE31FB8F71A0035410B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE21FB8F71A0035410B /* LocationService.swift */; };
 		8FD2FCE51FB8F7AA0035410B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE41FB8F7AA0035410B /* Constants.swift */; };
 		8FD2FCE71FB902B20035410B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE61FB902B20035410B /* Logger.swift */; };
+		8FD2FCE91FB91FF50035410B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE81FB91FF50035410B /* GoogleService-Info.plist */; };
+		8FD2FCEB1FB921180035410B /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCEA1FB921180035410B /* FirebaseManager.swift */; };
 		DA785F4E75665E16243D0C9C /* libPods-WeatherApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EC2F72DDC4A8D631C9E98EC3 /* libPods-WeatherApp.a */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +80,8 @@
 		8F2553771FB827B5000BD0A6 /* LatLon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LatLon.swift; sourceTree = "<group>"; };
 		8F2553791FB8281C000BD0A6 /* Containers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Containers.swift; sourceTree = "<group>"; };
 		8F25537B1FB82D61000BD0A6 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		8F3060121FB96B1300CF50FF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		8F3060141FB972D200CF50FF /* EmptyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyViewController.swift; sourceTree = "<group>"; };
 		8F31F7A11FB6665600C4CEE3 /* CityTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewController.swift; sourceTree = "<group>"; };
 		8F31F7A51FB66AFA00C4CEE3 /* Date.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		8F31F7A71FB66B5600C4CEE3 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
@@ -87,6 +93,8 @@
 		8FD2FCE21FB8F71A0035410B /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8FD2FCE41FB8F7AA0035410B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8FD2FCE61FB902B20035410B /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		8FD2FCE81FB91FF50035410B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8FD2FCEA1FB921180035410B /* FirebaseManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		D49453A5200A8E9576E6DE71 /* Pods-WeatherApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.debug.xcconfig"; sourceTree = "<group>"; };
 		EC2F72DDC4A8D631C9E98EC3 /* libPods-WeatherApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-WeatherApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -156,6 +164,7 @@
 				8FD2FCE21FB8F71A0035410B /* LocationService.swift */,
 				8FD2FCE41FB8F7AA0035410B /* Constants.swift */,
 				8FC009761FB36F1600365C33 /* Helper.swift */,
+				8FD2FCEA1FB921180035410B /* FirebaseManager.swift */,
 				8F2553791FB8281C000BD0A6 /* Containers.swift */,
 				8F2553751FB7EDF3000BD0A6 /* ApiService.swift */,
 				8F25537B1FB82D61000BD0A6 /* Event.swift */,
@@ -168,6 +177,7 @@
 				8F13D2AC1FAD34C1001BC21C /* LaunchScreen.storyboard */,
 				8F13D2AF1FAD34C1001BC21C /* Info.plist */,
 				8F13D2A71FAD34C1001BC21C /* WeatherApp.xcdatamodeld */,
+				8FD2FCE81FB91FF50035410B /* GoogleService-Info.plist */,
 				8FC0097C1FB37F1100365C33 /* AddCity.storyboard */,
 			);
 			path = WeatherApp;
@@ -215,6 +225,7 @@
 				8F13D2A21FAD34C1001BC21C /* ViewController.swift */,
 				8F31F7A91FB69A9500C4CEE3 /* ForecastPageViewController.swift */,
 				8F31F7AB1FB69B1A00C4CEE3 /* CityForcastPageController.swift */,
+				8F3060141FB972D200CF50FF /* EmptyViewController.swift */,
 				8F31F7A11FB6665600C4CEE3 /* CityTableViewController.swift */,
 			);
 			name = Controller;
@@ -225,6 +236,7 @@
 			children = (
 				8F2553771FB827B5000BD0A6 /* LatLon.swift */,
 				8F2553731FB7D1AC000BD0A6 /* TimeModel.swift */,
+				8F3060121FB96B1300CF50FF /* User.swift */,
 				8F2553711FB7D036000BD0A6 /* WeatherModel.swift */,
 			);
 			name = Model;
@@ -310,17 +322,20 @@
 					8F13D29C1FAD34C1001BC21C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 96555JQZZZ;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 					8F13D2B31FAD34C2001BC21C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 96555JQZZZ;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8F13D29C1FAD34C1001BC21C;
 					};
 					8F13D2BE1FAD34C2001BC21C = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 96555JQZZZ;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 8F13D29C1FAD34C1001BC21C;
 					};
@@ -353,6 +368,7 @@
 			files = (
 				8F13D2AE1FAD34C1001BC21C /* LaunchScreen.storyboard in Resources */,
 				8F13D2AB1FAD34C1001BC21C /* Assets.xcassets in Resources */,
+				8FD2FCE91FB91FF50035410B /* GoogleService-Info.plist in Resources */,
 				8F13D2A61FAD34C1001BC21C /* Main.storyboard in Resources */,
 				8FC0097D1FB37F1100365C33 /* AddCity.storyboard in Resources */,
 			);
@@ -442,6 +458,8 @@
 				8FD2FCE31FB8F71A0035410B /* LocationService.swift in Sources */,
 				8F31F7A81FB66B5600C4CEE3 /* CityTableViewCell.swift in Sources */,
 				8F2553761FB7EDF3000BD0A6 /* ApiService.swift in Sources */,
+				8FD2FCEB1FB921180035410B /* FirebaseManager.swift in Sources */,
+				8F3060131FB96B1300CF50FF /* User.swift in Sources */,
 				8F13D2A91FAD34C1001BC21C /* WeatherApp.xcdatamodeld in Sources */,
 				8FC009771FB36F1600365C33 /* Helper.swift in Sources */,
 				8F25537C1FB82D61000BD0A6 /* Event.swift in Sources */,
@@ -452,6 +470,7 @@
 				8F2553721FB7D036000BD0A6 /* WeatherModel.swift in Sources */,
 				8F31F7A61FB66AFA00C4CEE3 /* Date.swift in Sources */,
 				8FC009791FB3701D00365C33 /* Service.swift in Sources */,
+				8F3060151FB972D200CF50FF /* EmptyViewController.swift in Sources */,
 				8F31F7AA1FB69A9500C4CEE3 /* ForecastPageViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

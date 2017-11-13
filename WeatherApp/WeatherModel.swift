@@ -8,7 +8,7 @@
 
 import Foundation
 
-class WeatherModel: NSObject{
+class WeatherModel: NSObject, Codable{
     
     var dt: UInt64?
     
@@ -40,7 +40,7 @@ class WeatherModel: NSObject{
     //TODO: Update this function
     var local_time: String{
         get{
-            let unix_time = NSDate().timeIntervalSince1970 * 1000
+            let unix_time = Date().timeIntervalSince1970 * 1000
             
             return String(unix_time)
         }

@@ -10,43 +10,41 @@ import UIKit
 
 class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     var pages = [UIViewController]()
+    var index: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ForecastPageView viewDidLoad")
-
+  
+        print("ForecastPageView \(pages.count)")
+        if let _ = index{
+            print("ForecastPageView \(index!)")
+        }
         self.delegate = self
         self.dataSource = self
-  
+
+        asyncLoadDataToUI()
         
-        let app = UIApplication.shared.delegate as! AppDelegate
-        
-        let cities = app.cities
-        
-        for city in cities{
-            let page = createCityForecastPage(city: city)
-            
-            pages.append(page)
-            
+    }
+    
+    func setViewToPage(index: Int){
+        guard index >= 0 && index < pages.count else{
+            return
         }
         
-      
-        setViewControllers([pages[0]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
+        setViewControllers([pages[index]], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)
+        
     }
     
     
-    
-    func createCityForecastPage(city: String) -> CityForecastPageController{
+    func createCityForecastPage(today: WeatherModel?) -> CityForecastPageController{
         let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
-        
-        let weatherModel: WeatherModel = WeatherModel()
-        
-        weatherModel.city = city
-        
-        page.weatherModel = weatherModel
+        if let _ = today{
+          page.today = today!
+        }
         
         
         return page
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,14 +84,42 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     func emptyPage(){
         
     }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // load weather data to UI
+    func asyncLoadDataToUI(){
+        let todayWeather = TodayWeatherContainer.shared
+    
+        if todayWeather.dict.isEmpty{
+            let emptyPage = self.createCityForecastPage(today: nil)
+            self.pages.append(emptyPage)
+            setViewToPage(index: 0)
+            return
+        }
+    
+        let operationQueue = OperationQueue()
+        
+        operationQueue.addOperation {
+            
+            for(key, data) in todayWeather.dict{
+                let weatherModel = data.weatherModel
+                
+                OperationQueue.main.addOperation {
+                    let page = self.createCityForecastPage(today: weatherModel)
+                    self.pages.append(page)
+                   
+                    if self.pages.count == 1{
+                        self.setViewToPage(index: 0)
+                    }
+                }
+            }
+        }
+        
+        
+        
     }
-    */
+    
+    func loadTodayWeather(){
+        
+    }
 
 }

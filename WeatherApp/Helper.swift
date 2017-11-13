@@ -8,7 +8,9 @@
 
 import Foundation
 
- 
+class DateHelper{
+    
+}
 
 struct Tester{
     static let latlng = "lat=37.7652065&lon=-122.2416355"
@@ -20,7 +22,7 @@ struct JsonHelper{
 
 // parse json to models
 struct JsonParser{
-    static func parseThreeHours(data: Data) -> [WeatherModel]? {
+    static func parseThreeHours( data: Data) -> [WeatherModel]? {
         let weatherModels = [WeatherModel]()
         
         return weatherModels
@@ -52,7 +54,7 @@ struct JsonParser{
     }
     
     
-    static func parseForecast(data: Data) -> [WeatherModel]?{
+    static func parseForecast( data: Data) -> [WeatherModel]?{
     
         do{
             let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
@@ -67,7 +69,7 @@ struct JsonParser{
         }
     }
     
-    static func parseTime(data: Data) -> TimeModel?{
+    static func parseTime( data: Data) -> TimeModel?{
         print("parseTime")
         do{
             let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]

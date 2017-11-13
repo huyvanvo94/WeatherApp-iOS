@@ -1,0 +1,55 @@
+//
+//  FirebaseManager.swift
+//  WeatherApp
+//
+//  Created by Huy Vo on 11/12/17.
+//  Copyright © 2017 Huy Vo. All rights reserved.
+//
+
+import Foundation
+import Firebase
+import FirebaseDatabase
+
+class FirebaseManager{
+
+    var ref: DatabaseReference!
+    
+    init(){
+        ref = Database.database().reference()
+        
+        
+        
+    }
+    
+    func add(todayWeather weatherModel: WeatherModel){
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try! encoder.encode(weatherModel)
+        self.ref.child("weather").child("12313").setValue(String(data: data, encoding: .utf8)!)
+    }
+    // MARK - test
+    func fetch(latlon: LatLon?, completion: ((WeatherModel)->() )?){
+         
+        ref.child("weather").child("12313").observeSingleEvent(of: .value, with: { (data) in
+          
+            if let json = data.value as? String{
+                let jsonData = json.data(using: .utf8)!
+                let decoder = JSONDecoder()
+                let weatherModel = try! decoder.decode(WeatherModel.self, from: jsonData)
+                if let completion = completion{
+                    completion(weatherModel)
+                }
+            }
+          
+            
+            
+        })
+        
+        
+    }
+    
+    
+    func addToDb(){
+        self.ref.child("users").setValue(["username": "Huy Vo"])
+    }
+}

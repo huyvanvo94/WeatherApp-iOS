@@ -21,23 +21,23 @@ class Logger{
         return formatter
     }
     
-    func log(clazz: String, description: String){
+    func log(_ clazz: String, description: String){
         print( )
     }
     
-    private class func sourceFileName(filePath: String) -> String {
+    fileprivate class func sourceFileName(_ filePath: String) -> String {
         let components = filePath.components(separatedBy: "/")
         return components.isEmpty ? "" : components.last!
     }
     
-    class func log(message: String, // 1.
+    class func log(_ message: String, // 1.
         event: LogEvent, // 2.
         fileName: String = #file, // 3.
         line: Int = #line, // 4.
         column: Int = #column,// 5.
         funcName: String = #function)  // 6.
     {
-        print("\(Date().toString())\(event.rawValue)[\(sourceFileName(filePath: fileName))]:\(line) \(column) \(funcName) -> \(message)")
+        print("\(Date().toString())\(event.rawValue)[\(sourceFileName(fileName))]:\(line) \(column) \(funcName) -> \(message)")
     
     }
 }

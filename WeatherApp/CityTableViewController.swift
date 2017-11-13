@@ -10,21 +10,32 @@ import UIKit
 import GooglePlaces
 
 class CityTableViewController: UITableViewController, GMSAutocompleteViewControllerDelegate {
+    var cities = [String]()
     
-    var cities = ["Alameda", "Oakland"]
     var deleteAtIndex: IndexPath? = nil
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.delegate = self
         self.tableView.dataSource = self
    
+        addActivityIndicator()
        
+    }
+    
+    func addActivityIndicator() {
+        let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+        
+        myActivityIndicator.center = view.center
+        myActivityIndicator.hidesWhenStopped = false
+        myActivityIndicator.isHidden = true
+        myActivityIndicator.stopAnimating()
+        myActivityIndicator.viewWithTag(123)
+        view.addSubview(myActivityIndicator)
     }
  
     @IBAction func searchCity(_ sender: UIBarButtonItem) {
-        
+ 
         searchAndAddCity()
     }
     func searchAndAddCity() {
@@ -52,6 +63,18 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         return cities.count
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("row selected: \(indexPath.row)")
+        
+        if let nav = self.navigationController {
+            let vc = nav.popViewController(animated: true) as! ForecastPageViewController
+            vc.index = indexPath.row
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+ 
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
     
@@ -64,12 +87,12 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         if editingStyle == .delete {
             deleteAtIndex = indexPath
             if let index = deleteAtIndex?.row{
-                confirmDelete(city: cities[index])
+                confirmDelete(cities[index])
             }
         }
     }
     
-    func confirmDelete(city: String){
+    func confirmDelete(_ city: String){
         let alert = UIAlertController(title: "Delete City", message: "Are you sure you want to delete \(city)?",  preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteCity)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelDelete)
@@ -79,10 +102,10 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     }
     
     // set variable back to nil
-    func handleCancelDelete(alertAction: UIAlertAction!) -> Void{
+    func handleCancelDelete(_ alertAction: UIAlertAction!) -> Void{
         deleteAtIndex = nil
     }
-    func handleDeleteCity(alertAction: UIAlertAction!) -> Void{
+    func handleDeleteCity(_ alertAction: UIAlertAction!) -> Void{
         if let indexPath = deleteAtIndex {
            // self.tableView.deleteRows(at: [indexPath], with: .fade)
             deleteAtIndex = nil
@@ -92,14 +115,15 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         }
     }
     // Handle the user's selection.
-    public func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-      
-        cities.append(place.name)
-        self.tableView.reloadData()
+    open func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
+        if let activityIndicator = view.viewWithTag(123) as? UIActivityIndicatorView{
+            activityIndicator.startAnimating()
+            activityIndicator.isHidden = false
+        }
         // name of the city
         let city = place.name
-        
+ 
         let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
         
         // to update the UI
@@ -110,7 +134,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
                 container.add(location: latlon, weatherModel: weatherModel)
                 
                 OperationQueue.main.addOperation {
-                    self.postToUI(weather: weatherModel)
+                    self.postToUI(weatherModel)
                 }
         })
         
@@ -130,30 +154,71 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     }
  
     // p
-    func postToUI(weather: WeatherModel){
+    func postToUI(_ weather: WeatherModel){
         print("postToUI \(weather.city!)")
         
+        if let activityIndicator = view.viewWithTag(123) as? UIActivityIndicatorView{
+            activityIndicator.stopAnimating()
+            activityIndicator.isHidden = true
+        }
+        
+        if let cityName = weather.city{
+            cities.append(cityName)
+            self.tableView.reloadData()
+        }
         
         
     }
     
-    public func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        // TODO: handle the error.
-        print("Error: ", error.localizedDescription)
+    open func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+     
+        showToast(message: "cannot fetch weather")
     }
     
     // User canceled the operation.
-    public func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+    open func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
     }
     
     // Turn the network activity indicator on and off again.
-    public func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    open func didRequestAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
-    public func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
+    open func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+
+}
+
+extension UIViewController {
+    // return to previous view
+    func performSegueToReturnBack()  {
+        if let nav = self.navigationController {
+            nav.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func showToast(message : String) {
+        
+        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
+        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center;
+        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10;
+        toastLabel.clipsToBounds  =  true
+        self.view.addSubview(toastLabel)
+        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: {(isCompleted) in
+            toastLabel.removeFromSuperview()
+        })
+    }
+    
 
 }
