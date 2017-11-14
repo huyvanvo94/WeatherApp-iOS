@@ -48,8 +48,30 @@ class FirebaseManager{
         
     }
     
+    func addUserToDB(user: User) -> String{
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try! encoder.encode(user)
+        
+        let newRef = self.ref.child("users").childByAutoId()
+        newRef.setValue(String(data: data, encoding: .utf8)!)
+        
+        return newRef.key
+    }
+    
     
     func addToDb(){
-        self.ref.child("users").setValue(["username": "Huy Vo"])
+        let user = User(first: "Huy", last: "Vo")
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try! encoder.encode(user)
+        
+        let newRef = self.ref.child("users").childByAutoId()
+        newRef.setValue(String(data: data, encoding: .utf8)!)
+        
+        let id = newRef.key
+        
+        print(id)
+        
     }
 }

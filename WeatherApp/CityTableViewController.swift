@@ -167,7 +167,6 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
             self.tableView.reloadData()
         }
         
-        
     }
     
     open func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {

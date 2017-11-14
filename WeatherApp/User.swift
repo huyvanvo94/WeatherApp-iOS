@@ -8,11 +8,24 @@
 
 import Foundation
 
-class User{
+class User: Codable{
     
-    let id: UInt64
+    var id: String?
     
-    init(id: UInt64) {
-        self.id = id
+    let firstName: String
+    let lastName: String
+    
+    init(first firstName: String, last lastName: String ){
+        self.firstName = firstName
+        self.lastName = lastName
     }
 }
+
+class PatronUser: User{
+    
+}
+
+class AdminUser: User{
+    
+}
+

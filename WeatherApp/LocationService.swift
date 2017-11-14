@@ -8,13 +8,11 @@
 
 import Foundation
 import CoreLocation
-
-
+ 
 class LocationService{
-    
-    let locationManger = CLLocation()
-    
+  
     init() {
+     
         
     }
 }
