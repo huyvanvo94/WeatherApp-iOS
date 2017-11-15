@@ -23,6 +23,10 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
        
     }
     
+    func asyncLoadData(){
+        
+    }
+    
     func addActivityIndicator() {
         let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
         
@@ -64,15 +68,15 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("row selected: \(indexPath.row)")
-        
-        if let nav = self.navigationController {
-            let vc = nav.popViewController(animated: true) as! ForecastPageViewController
+        //print("row selected: \(indexPath.row)")
+    
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
             vc.index = indexPath.row
-        } else {
-            self.dismiss(animated: true, completion: nil)
+            self.present(vc, animated: true, completion: nil)
         }
- 
+       
+        
+       
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,8 +127,16 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         }
         // name of the city
         let city = place.name
- 
         let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
+        
+        let latlonC = LatLonContainer.shared
+      
+        if (latlonC.contains(location: latlon)) == true{
+            dismiss(animated: true, completion: nil)
+            return
+        }
+        
+        latlonC.add(location: latlon)
         
         // to update the UI
         FetchWeatherEvent(city: city, latlon: latlon).asyncFetch(
@@ -140,6 +152,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         
         FetchForecastEvent(city: city, latlon: latlon).asyncFetch(completion: {(weatherModels: [WeatherModel]) -> Void in
             let container = ForecastContainer.shared
+            
             container.add(location: latlon, weatherModel: weatherModels)
             
         })

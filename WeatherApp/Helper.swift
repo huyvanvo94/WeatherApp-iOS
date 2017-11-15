@@ -34,8 +34,8 @@ struct JsonParser{
                 weatherModel.temp_max = mainObject["temp_max"] as? Double
                 weatherModel.temp_min = mainObject["temp_min"] as? Double
                 weatherModel.temp = mainObject["temp"] as? Double
-                
-                let weatherInfo = ((json["weather"] as! NSArray)[0]) as! [String: Any]
+              
+                let weatherInfo = ((weatherJsonObject["weather"] as! NSArray)[0]) as! [String: Any]
                 weatherModel.main = weatherInfo["main"] as? String
                 weatherModel.weather_description = weatherInfo["description"] as? String
                 weatherModel.icon = weatherInfo["icon"] as? String

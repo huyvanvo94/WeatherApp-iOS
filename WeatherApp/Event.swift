@@ -78,7 +78,7 @@ class FetchForecastEvent{
     
 }
 
-// event to event today's weather
+
 class FetchWeatherEvent{
     
     let city: String
@@ -100,8 +100,9 @@ class FetchWeatherEvent{
             ApiService.fetchWeather(latlng: location, completion:
                 {(weatherModel: WeatherModel) -> Void in
                     
-                    
                     weatherModel.city = self.city
+                    weatherModel.lat = self.latlon.latitude
+                    weatherModel.lng = self.latlon.longitude
              
                     let location = self.latlon.googleLocation
                     ApiService.fetchTimeZone(googleFormatted: location, completion: {

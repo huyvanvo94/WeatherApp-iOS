@@ -20,6 +20,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         if let _ = index{
             print("ForecastPageView \(index!)")
         }
+        
         self.delegate = self
         self.dataSource = self
 
@@ -37,12 +38,11 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    func createCityForecastPage(today: WeatherModel?) -> CityForecastPageController{
+    func createCityForecastPage(weatherBuilder: WeatherForecastBuilder?) -> CityForecastPageController{
         let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
-        if let _ = today{
-          page.today = today!
-        }
         
+        print("Weather Builder City: \(weatherBuilder?.cityName)")
+        page.weatherBuilder = weatherBuilder
         
         return page
     }
@@ -87,31 +87,53 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
 
     // load weather data to UI
     func asyncLoadDataToUI(){
+        
+        print("asyncLoaDataToUI")
+        
         let todayWeather = TodayWeatherContainer.shared
     
+        // if is empty, UI needs to tell user that currently containers no weather
         if todayWeather.dict.isEmpty{
-            let emptyPage = self.createCityForecastPage(today: nil)
+        
+            let emptyPage = self.createCityForecastPage(weatherBuilder: nil)
             self.pages.append(emptyPage)
             setViewToPage(index: 0)
             return
         }
-    
+  
+        
         let operationQueue = OperationQueue()
         
         operationQueue.addOperation {
             
             for(key, data) in todayWeather.dict{
-                let weatherModel = data.weatherModel
                 
-                OperationQueue.main.addOperation {
-                    let page = self.createCityForecastPage(today: weatherModel)
-                    self.pages.append(page)
+                let today: WeatherModel = data.weatherModel
+                
+                guard let threeHours: [WeatherModel] = ThreeHoursForecastContainer.shared.fetch(with: key), let forecast: [WeatherModel] = ForecastContainer.shared.fetch(with: key) else{
                    
-                    if self.pages.count == 1{
-                        self.setViewToPage(index: 0)
-                    }
+                    continue
                 }
+                
+                let weatherBuilder = WeatherForecastBuilder(todayWeather: today, threeHoursWeather: threeHours, forecastWeather: forecast)
+               
+                OperationQueue.main.addOperation {
+                    print(weatherBuilder.cityName)
+                    
+                    let page = self.createCityForecastPage(weatherBuilder: weatherBuilder)
+                   
+                    self.pages.append(page)
+                    
+                    if self.pages.count == self.index! + 1{
+                        self.setViewToPage(index: self.index!)
+                    }
+
+                }
+                
+                
+                
             }
+          
         }
         
         

@@ -12,14 +12,29 @@ protocol Container{
     
 }
 
+
+
 class ThreeHoursForecastContainer{
     
     static let shared = ThreeHoursForecastContainer()
     
+    var dict = [LatLon: ThreeHoursPackage]()
+    
     fileprivate init(){}
     
     func add(location latlon: LatLon, weatherModels: [WeatherModel]){
+    
+        dict[latlon] = ThreeHoursPackage(threehours: weatherModels)
         
+    }
+    
+    func remove(location latlon: LatLon){
+        dict[latlon] = nil
+    }
+    
+    func fetch(with laton: LatLon) -> [WeatherModel]?{
+       
+        return dict[laton]?.weatherModels
     }
     
     
@@ -37,13 +52,30 @@ class ThreeHoursForecastContainer{
 
 class ForecastContainer{
     static let shared = ForecastContainer()
-    
+    var dict = [LatLon: ForecastPackage]()
     fileprivate init(){}
     
     
     func add(location latlon: LatLon, weatherModel: [WeatherModel]){
+        dict[latlon] = ForecastPackage(weatherModels: weatherModel)
+    }
+    
+    func remove(location laton: LatLon){
+        dict[laton] = nil
+    }
+    
+    func fetch(with location: LatLon) -> [WeatherModel]?{
+        return dict[location]?.weatherModels
+    }
+    
+    struct ForecastPackage{
+        var weatherModels: [WeatherModel]
+        var timestamp: TimeInterval
         
-        
+        init(weatherModels: [WeatherModel]) {
+            self.weatherModels = weatherModels
+            self.timestamp = Date().timeIntervalSince1970
+        }
     }
     
 }
@@ -100,9 +132,7 @@ class LatLonContainer{
     
     
     func add(location latlon: LatLon!){
-        
         locations.append(latlon)
-        
     }
     
     func contains(location laton: LatLon) -> Bool{

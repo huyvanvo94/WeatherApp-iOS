@@ -10,17 +10,31 @@ import UIKit
 
 class CityForecastPageController: UIViewController {
 
-    // weather model cannot be null
-    var today: WeatherModel!
+    var weatherBuilder: WeatherForecastBuilder?
     
-    @IBOutlet weak var cityName: UILabel!
+    @IBOutlet weak var cityLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
- 
-        //cityName.text = weatherModel.city
+  
+        print(weatherBuilder == nil)
+        if weatherBuilder != nil{
+         
+            if let city = weatherBuilder?.cityName{
+             
+                cityLabel.sizeToFit()
+                cityLabel.text = city
+                cityLabel.adjustsFontSizeToFitWidth = true
+                cityLabel.textAlignment = .center
+            }
+            
+            
+        }else{
+            
+        }
         
-        self.view.backgroundColor = UIColor.blue
+        //self.view.backgroundColor = UIColor.blue
     }
 
     override func didReceiveMemoryWarning() {
