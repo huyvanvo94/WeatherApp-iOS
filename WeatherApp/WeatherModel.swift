@@ -9,11 +9,11 @@
 import Foundation
 
 class WeatherModel: NSObject, Codable{
+    // maybe i should change data type
+    var dt: Double?
     
-    var dt: UInt64?
-    
-    var humidity: Int?
-    var pressure: Int?
+    var humidity: Double?
+    var pressure: Double?
     
     var wind_speed: Double?
     
@@ -29,11 +29,15 @@ class WeatherModel: NSObject, Codable{
     var lng: Double?
     
     var location: String?
-    
+    var degree: Double? 
     var country: String?
     var city: String?
     var weather_description: String?
     var time_zone_id: String?
+    
+    var main: String?
+    
+    var icon: String?
     
     // Time logistics
     
@@ -69,4 +73,16 @@ class WeatherModel: NSObject, Codable{
     override var description: String{
         return ""
     }
+}
+
+class ThreeHoursModel: WeatherModel{
+    
+}
+
+class ForecastModel: WeatherModel{
+    
+}
+
+class TodayWeatherModel: WeatherModel{
+    
 }
