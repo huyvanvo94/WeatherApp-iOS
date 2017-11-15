@@ -124,7 +124,7 @@ class Cities{
 
 
 class LatLonContainer{
-    fileprivate var locations = [LatLon]()
+    var locations = [LatLon]()
     
     static let shared = LatLonContainer()
     
@@ -139,4 +139,11 @@ class LatLonContainer{
         return locations.contains(where: {$0 == laton })
     }
     
+    func get(index: Int) -> LatLon?{
+        if index < 0 || index > locations.count{
+            return nil
+        }
+         
+        return locations[index]
+    }
 }

@@ -11,9 +11,9 @@ import Foundation
 
 class WeatherForecastBuilder{
     
-    let todayWeather: WeatherModel
-    let threeHoursWeather: [WeatherModel]
-    let forecastWeather: [WeatherModel]
+    var todayWeather: WeatherModel?
+    var threeHoursWeather: [WeatherModel]?
+    var forecastWeather: [WeatherModel]?
     
     init(todayWeather: WeatherModel, threeHoursWeather: [WeatherModel], forecastWeather: [WeatherModel]) {
         self.todayWeather = todayWeather
@@ -24,7 +24,7 @@ class WeatherForecastBuilder{
     
     var cityName: String?{
         get{
-            return todayWeather.city
+            return todayWeather?.city
         }
     }
     

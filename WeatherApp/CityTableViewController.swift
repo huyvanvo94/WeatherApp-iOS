@@ -37,6 +37,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         myActivityIndicator.viewWithTag(123)
         view.addSubview(myActivityIndicator)
     }
+    
  
     @IBAction func searchCity(_ sender: UIBarButtonItem) {
  
@@ -69,12 +70,17 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("row selected: \(indexPath.row)")
-    
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
-            vc.index = indexPath.row
+     
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController{
+            
+            let app = UIApplication.shared.delegate as! AppDelegate
+            
+            app.index = indexPath.row 
+           // vc.index = indexPath.row
             self.present(vc, animated: true, completion: nil)
         }
        
+ 
         
        
     }

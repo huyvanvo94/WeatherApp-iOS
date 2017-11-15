@@ -10,18 +10,13 @@ import UIKit
 
 class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     var pages = [UIViewController]()
-    var index: Int?
-    
+  
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ForecastPageView viewDidLoad")
   
         print("ForecastPageView \(pages.count)")
-        if let _ = index{
-            print("ForecastPageView \(index!)")
-        }
-        
-        self.delegate = self
+ 
         self.dataSource = self
 
         asyncLoadDataToUI()
@@ -100,48 +95,16 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
             setViewToPage(index: 0)
             return
         }
-  
         
-        let operationQueue = OperationQueue()
+        let app = UIApplication.shared.delegate as! AppDelegate
+        let index = app.index
         
-        operationQueue.addOperation {
-            
-            for(key, data) in todayWeather.dict{
-                
-                let today: WeatherModel = data.weatherModel
-                
-                guard let threeHours: [WeatherModel] = ThreeHoursForecastContainer.shared.fetch(with: key), let forecast: [WeatherModel] = ForecastContainer.shared.fetch(with: key) else{
-                   
-                    continue
-                }
-                
-                let weatherBuilder = WeatherForecastBuilder(todayWeather: today, threeHoursWeather: threeHours, forecastWeather: forecast)
-               
-                OperationQueue.main.addOperation {
-                    print(weatherBuilder.cityName)
-                    
-                    let page = self.createCityForecastPage(weatherBuilder: weatherBuilder)
-                   
-                    self.pages.append(page)
-                    
-                    if self.pages.count == self.index! + 1{
-                        self.setViewToPage(index: self.index!)
-                    }
-
-                }
-                
-                
-                
-            }
-          
-        }
-        
-        
+        let queue = LoadWeatherQueue(vc: self, index: index)
+        queue.asyncStart()
+ 
         
     }
     
-    func loadTodayWeather(){
-        
-    }
-
+ 
 }
+
