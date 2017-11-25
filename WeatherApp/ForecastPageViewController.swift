@@ -1,3 +1,4 @@
+
 //
 //  ForecastViewController.swift
 //  WeatherApp
@@ -5,20 +6,19 @@
 //  Created by Huy Vo on 11/10/17.
 //  Copyright © 2017 Huy Vo. All rights reserved.
 //
-
 import UIKit
 
 class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     var pages = [UIViewController]()
-  
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("ForecastPageView viewDidLoad")
-  
+        
         print("ForecastPageView \(pages.count)")
- 
+        
         self.dataSource = self
-
+        
         asyncLoadDataToUI()
         
     }
@@ -41,14 +41,14 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         
         return page
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     
- 
+    
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController)-> UIViewController? {
         
@@ -79,17 +79,17 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     func emptyPage(){
         
     }
-
+    
     // load weather data to UI
     func asyncLoadDataToUI(){
         
         print("asyncLoaDataToUI")
         
         let todayWeather = TodayWeatherContainer.shared
-    
+        
         // if is empty, UI needs to tell user that currently containers no weather
         if todayWeather.dict.isEmpty{
-        
+            
             let emptyPage = self.createCityForecastPage(weatherBuilder: nil)
             self.pages.append(emptyPage)
             setViewToPage(index: 0)
@@ -101,10 +101,10 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         
         let queue = LoadWeatherQueue(vc: self, index: index)
         queue.asyncStart()
- 
+        
         
     }
     
- 
+    
 }
 

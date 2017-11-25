@@ -1,11 +1,10 @@
 //
-//  LoadWeatherQueue.swift
+//  ForecastViewController.swift
 //  WeatherApp
 //
-//  Created by Huy Vo on 11/14/17.
+//  Created by Huy Vo on 11/10/17.
 //  Copyright © 2017 Huy Vo. All rights reserved.
 //
-
 import Foundation
 class LoadWeatherQueue{
     
@@ -43,7 +42,7 @@ class LoadWeatherQueue{
             let page = self.vc.createCityForecastPage(weatherBuilder: weatherBuilder)
             
             self.vc.pages.append(page)
-                        if self.count != -1{
+            if self.count != -1{
                 if self.count == self.index{
                     self.vc.setViewToPage(index: self.index)
                     self.count = -1
@@ -51,22 +50,14 @@ class LoadWeatherQueue{
                     self.count += 1
                 }
             }
-            
-            
-            
             self.fetchData()
         }
-        
     }
     
     func asyncStart(){
-        
         let queue = OperationQueue()
         queue.addOperation {
-            
             self.fetchData()
         }
-        
-        
     }
 }

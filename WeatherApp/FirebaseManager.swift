@@ -40,9 +40,7 @@ class FirebaseManager{
                     completion(weatherModel)
                 }
             }
-          
-            
-            
+           
         })
         
         
