@@ -20,13 +20,12 @@ class DateHelper{
 
     }
     
-    static func getLocalData(dt: TimeInterval, timeZoneId: String) -> String{
+    static func getLocalDate(dt: TimeInterval, timeZoneId: String) -> String{
         let date = Date(timeIntervalSince1970: dt)
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = DateFormatter.Style.medium//Set date style
         dateFormatter.timeZone = TimeZone(identifier: timeZoneId)
         return dateFormatter.string(from: date as Date)
-        
     }
     
     static func isTomorrow(dt: TimeInterval ) -> Bool{
@@ -36,14 +35,24 @@ class DateHelper{
     static func numberFromToday(dt: TimeInterval) -> Int?{
         let todayDate = Date()
         
-        let aDate = Date(timeIntervalSince1970: TimeInterval(1510664345000/1000))
+        let aDate = Date(timeIntervalSince1970: dt)
         
         let calendar = NSCalendar.current
-        
         let date1 = calendar.startOfDay(for: todayDate)
         let date2 = calendar.startOfDay(for: aDate)
         let components = calendar.dateComponents([.day], from: date1, to: date2)
         return (components.day)
     }
     
+    static func getDayOfWeek(dt: TimeInterval, timeZoneId: String) -> String{
+        let date = Date(timeIntervalSince1970: dt)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeZone = TimeZone(identifier: timeZoneId)
+        return dateFormatter.string(from: date as Date)
+    }
+}
+
+extension Date{
+    var localTimeZoneName: String { return TimeZone.current.identifier }
 }

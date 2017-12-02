@@ -39,40 +39,52 @@ class WeatherModel: NSObject, Codable{
     
     var icon: String?
     
-    // Time logistics
-    
-    //TODO: Update this function
-    var local_time: String{
+
+    var day_of_the_week: String?{
         get{
-            let unix_time = Date().timeIntervalSince1970 * 1000
+            if let _ = time_zone_id{
+                if let _  = dt{
+                    return DateHelper.getDayOfWeek(dt: dt!, timeZoneId: time_zone_id!)
+                }
+            }
             
-            return String(unix_time)
+            return nil
         }
     }
     
-    
-    var day_of_the_week: String{
+    var local_date: String?{
         get{
-            return "TODO"
+            if let _ = time_zone_id{
+                if let _ = dt{
+                    return DateHelper.getLocalDate(dt: dt!, timeZoneId: time_zone_id!)
+                }
+            }
+            
+            return nil
         }
     }
     
-    var local_date: String{
+    var future_time: String?{
         get{
-            return "TODO"
+            if let _ = time_zone_id{
+                if let _ = dt{
+                    return DateHelper.getLocalTime(dt: dt!, timeZoneId: time_zone_id!)
+                }
+            }
+            return nil
         }
     }
     
-    var future_time: String{
-        get{
-            return "TODO"
+    var local_time: String{
+        get{ 
+            return DateHelper.getLocalTime(dt: Date().timeIntervalSince1970, timeZoneId: TimeZone.current.identifier)
         }
     }
     
     // a variable to print out about class
     override var description: String{
         return ""
-    }
+    } 
 }
 
 class ThreeHoursModel: WeatherModel{
