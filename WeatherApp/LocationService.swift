@@ -66,6 +66,12 @@ class LocationService: NSObject, CLLocationManagerDelegate {
         updateLocation(currentLocation: location)
     }
     
+    func startMonitoringSignificantLocationChanges(){
+     
+         self.locationManager?.startMonitoringSignificantLocationChanges()
+        
+    }
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         
         // do on error
