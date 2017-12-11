@@ -84,7 +84,17 @@ class WeatherModel: NSObject, Codable{
     // a variable to print out about class
     override var description: String{
         return ""
-    } 
+    }
+    
+    static func ==(lhs: WeatherModel, rhs: WeatherModel) -> Bool {
+        
+        return lhs.hashValue == rhs.hashValue
+        
+    }
+    
+    
+    
+    
 }
 
 class ThreeHoursModel: WeatherModel{

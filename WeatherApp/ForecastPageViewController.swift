@@ -8,19 +8,46 @@
 //
 import UIKit
 
-class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    var pages = [UIViewController]()
+class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, WeatherAppDelegate {
     
+    var pages = [UIViewController]()
+   
+    func loadWeather(weather: WeatherModel) {
+        
+    }
+    
+    func load(weather: WeatherModel) {
+        
+    }
+    
+    func loadTodayWeather(weatherModels: [WeatherModel]) {
+        
+    }
+    
+    func load(weather: Weather){
+        self.pages.append(self.createCityForecastPage(weather: weather)) 
+    }
+    
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ForecastPageView viewDidLoad")
-        
-        print("ForecastPageView \(pages.count)")
         
         self.dataSource = self
         
         asyncLoadDataToUI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
+        WeatherApp.shared.add(delegate: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        WeatherApp.shared.remove(delegate: self)
     }
     
     func setViewToPage(index: Int){
@@ -33,11 +60,10 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    func createCityForecastPage(weatherBuilder: WeatherForecastBuilder?) -> CityForecastPageController{
+    func createCityForecastPage(weather: Weather?) -> CityForecastPageController{
         let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
         
-        print("Weather Builder City: \(weatherBuilder?.cityName)")
-        page.weatherBuilder = weatherBuilder
+        page.weather = weather
         
         return page
     }
@@ -90,7 +116,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         // if is empty, UI needs to tell user that currently containers no weather
         if todayWeather.dict.isEmpty{
             
-            let emptyPage = self.createCityForecastPage(weatherBuilder: nil)
+            let emptyPage = self.createCityForecastPage(weather: nil)
             self.pages.append(emptyPage)
             setViewToPage(index: 0)
             return
@@ -98,10 +124,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         
         let app = UIApplication.shared.delegate as! AppDelegate
         let index = app.index
-        
-        let queue = LoadWeatherQueue(vc: self, index: index)
-        queue.asyncStart()
-        
+     
         
     }
     

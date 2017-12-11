@@ -10,19 +10,23 @@ import UIKit
 
 class CityForecastPageController: UIViewController {
 
-    var weatherBuilder: WeatherForecastBuilder?
+    var weather: Weather?
     
     @IBOutlet weak var cityLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
-  
-        print(weatherBuilder == nil)
-        if weatherBuilder != nil{
-         
-            if let city = weatherBuilder?.cityName{
-             
+    
+        loadToView()
+    }
+
+    func loadToView(){
+        
+        if let weather = self.weather{
+            
+            if let city = weather.city{
+                
                 cityLabel.sizeToFit()
                 cityLabel.text = city
                 cityLabel.adjustsFontSizeToFitWidth = true
@@ -34,9 +38,9 @@ class CityForecastPageController: UIViewController {
             
         }
         
-        //self.view.backgroundColor = UIColor.blue
     }
-
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

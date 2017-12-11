@@ -9,40 +9,68 @@
 import UIKit
 import GooglePlaces
 
-class CityTableViewController: UITableViewController, GMSAutocompleteViewControllerDelegate {
+class CityTableViewController: UITableViewController, GMSAutocompleteViewControllerDelegate, WeatherAppDelegate {
+    func load(weather: Weather){
+        
+    }
+    func load(weather: WeatherModel) {
+        print("load")
+       
+        if let _ = placesWeather.index(of: weather){
+            return
+        }
+        
+        self.placesWeather.append(weather)
+        self.tableView.reloadData()
+        
+        
+    }
+    
     var cities = [String]()
+    
+    
+    var placesWeather = [WeatherModel]()
     
     var deleteAtIndex: IndexPath? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-   
-        addActivityIndicator()
        
     }
     
-    func asyncLoadData(){
+    override func viewWillAppear(_ animated: Bool) {
+        print("viewWillAppear")
+        super.viewWillAppear(animated)
+        
+        WeatherApp.shared.add(delegate: self)
         
     }
     
-    func addActivityIndicator() {
-        let myActivityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+    
+    override func viewDidAppear(_ animated: Bool) {
         
-        myActivityIndicator.center = view.center
-        myActivityIndicator.hidesWhenStopped = false
-        myActivityIndicator.isHidden = true
-        myActivityIndicator.stopAnimating()
-        myActivityIndicator.viewWithTag(123)
-        view.addSubview(myActivityIndicator)
+        super.viewDidAppear(animated)
+        
+        
+        
     }
     
- 
+    override func viewWillDisappear(_ animated: Bool) {
+        print("viewWillDisappear")
+        super.viewWillDisappear(animated)
+        WeatherApp.shared.remove(delegate: self)
+        
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+      
+    }
+    
     @IBAction func searchCity(_ sender: UIBarButtonItem) {
- 
         searchAndAddCity()
     }
+    
     func searchAndAddCity() {
         let autocompleteController = GMSAutocompleteViewController()
         let filterByCity = GMSAutocompleteFilter()
@@ -65,7 +93,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
      
-        return cities.count
+        return self.placesWeather.count
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -79,16 +107,13 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
            // vc.index = indexPath.row
             self.present(vc, animated: true, completion: nil)
         }
-       
- 
-        
-       
+         
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
     
-        cell.textLabel?.text = cities[indexPath.row]
+        cell.textLabel?.text = self.placesWeather[indexPath.row].city ?? "No Name"
       
         return cell
     }
@@ -131,63 +156,20 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
             activityIndicator.startAnimating()
             activityIndicator.isHidden = false
         }
-        // name of the city
+        
         let city = place.name
-        let latlon = LatLon(latitude: place.coordinate.latitude as Double, longitude: place.coordinate.longitude as Double)
         
-        let latlonC = LatLonContainer.shared
-      
-        if (latlonC.contains(location: latlon)) == true{
-            dismiss(animated: true, completion: nil)
-            return
-        }
-        
-        latlonC.add(location: latlon)
-        
-        // to update the UI
-        FetchWeatherEvent(city: city, latlon: latlon).asyncFetch(
-            completion: {(weatherModel: WeatherModel) -> Void in
-                
-                let container = TodayWeatherContainer.shared
-                container.add(location: latlon, weatherModel: weatherModel)
-                
-                OperationQueue.main.addOperation {
-                    self.postToUI(weatherModel)
-                }
-        })
-        
-        FetchForecastEvent(city: city, latlon: latlon).asyncFetch(completion: {(weatherModels: [WeatherModel]) -> Void in
-            let container = ForecastContainer.shared
-            
-            container.add(location: latlon, weatherModel: weatherModels)
-            
-        })
+        let place = Place(city: city, longitude: place.coordinate.longitude as Double, latitude: place.coordinate.latitude as Double)
         
         
-        FetchThreeHoursForecastEvent(city: city, latlon: latlon).asyncFetch(completion:  {(weatherModels: [WeatherModel]) -> Void in
-            let container = ThreeHoursForecastContainer.shared
-            container.add(location: latlon, weatherModels: weatherModels)
-        })
+        WeatherApp.shared.addPlace(place)
+  
         
         dismiss(animated: true, completion: nil)
     }
  
-    // p
-    func postToUI(_ weather: WeatherModel){
-        print("postToUI \(weather.city!)")
-        
-        if let activityIndicator = view.viewWithTag(123) as? UIActivityIndicatorView{
-            activityIndicator.stopAnimating()
-            activityIndicator.isHidden = true
-        }
-        
-        if let cityName = weather.city{
-            cities.append(cityName)
-            self.tableView.reloadData()
-        }
-        
-    }
-    
+ 
+ 
     open func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
      
         showToast(message: "cannot fetch weather")
@@ -206,6 +188,18 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     open func didUpdateAutocompletePredictions(_ viewController: GMSAutocompleteViewController) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+    
+    func loadTodayWeather(weatherModels: [WeatherModel]){
+        
+    }
+    
+    func loadWeather(weather: WeatherModel){
+        
+    }
+    
+    
+    
+ 
 
 }
 

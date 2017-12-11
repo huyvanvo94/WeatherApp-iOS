@@ -33,8 +33,7 @@ struct ApiService{
                    
                     if httpResponse.statusCode == 200 {
                         
-                        if let data = data{
-                           
+                        if let data = data{ 
                             if let timeModel = JsonParser.parseTime(data: data){
                                 if let completion = completion{
                                     completion(timeModel)
