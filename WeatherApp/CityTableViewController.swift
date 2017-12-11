@@ -41,9 +41,8 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear")
         super.viewWillAppear(animated)
-        
         WeatherApp.shared.add(delegate: self)
-        
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tableView.reloadData), userInfo: nil, repeats: true)
     }
     
     
@@ -196,8 +195,6 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     func loadWeather(weather: WeatherModel){
         
     }
-    
-    
     
  
 
