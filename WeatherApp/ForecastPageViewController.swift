@@ -10,24 +10,38 @@ import UIKit
 
 class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, WeatherAppDelegate {
     
+    lazy var settingButton: UIButton = {
+        
+        let button = UIButton()
+        
+        return button
+    }()
+    
+    var index: Int = -1
+    
+    var weatherModels = [WeatherModel]()
+    
     var pages = [UIViewController]()
    
-    func loadWeather(weather: WeatherModel) {
-        
-    }
-    
-    func load(weather: WeatherModel) {
-        
-    }
-    
-    func loadTodayWeather(weatherModels: [WeatherModel]) {
-        
-    }
-    
     func load(weather: Weather){
-        self.pages.append(self.createCityForecastPage(weather: weather)) 
+        print("load")
+        if let _ = self.weatherModels.index(of: weather.todayWeather){
+            return
+        }
+        
+        self.weatherModels.append(weather.todayWeather)
+        self.pages.append(self.createCityForecastPage(weather: weather))
+        
+        if self.weatherModels.count - 1 == self.index{
+        
+            self.setViewToPage(index: self.index)
+        }
     }
     
+    func load(weatherModel: WeatherModel){
+        
+    }
+ 
     
 
     override func viewDidLoad() {
@@ -35,21 +49,39 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         
         self.dataSource = self
         
-        asyncLoadDataToUI()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        WeatherApp.shared.add(delegate: self)
+        print("viewWillAppear")
+
+        if WeatherApp.shared.places.isEmpty{
+            let emptyPage = self.createCityForecastPage(weather: nil)
+            self.pages.append(emptyPage)
+            setViewToPage(index: 0)
+        }else{
+ 
+            WeatherApp.shared.add(delegate: self)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print("viewWillDisappear")
         
         WeatherApp.shared.remove(delegate: self)
     }
-    
+
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        print("viewDidAppear")
+
+
+    }
+
     func setViewToPage(index: Int){
         guard index >= 0 && index < pages.count else{
             return
@@ -60,8 +92,8 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    func createCityForecastPage(weather: Weather?) -> CityForecastPageController{
-        let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
+    func createCityForecastPage(weather: Weather?) -> WeatherViewController {
+        let page = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
         
         page.weather = weather
         
@@ -101,33 +133,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     func presentationIndex(for pageViewController: UIPageViewController)-> Int {
         return pages.count
     }
-    
-    func emptyPage(){
-        
-    }
-    
-    // load weather data to UI
-    func asyncLoadDataToUI(){
-        
-        print("asyncLoaDataToUI")
-        
-        let todayWeather = TodayWeatherContainer.shared
-        
-        // if is empty, UI needs to tell user that currently containers no weather
-        if todayWeather.dict.isEmpty{
-            
-            let emptyPage = self.createCityForecastPage(weather: nil)
-            self.pages.append(emptyPage)
-            setViewToPage(index: 0)
-            return
-        }
-        
-        let app = UIApplication.shared.delegate as! AppDelegate
-        let index = app.index
-     
-        
-    }
-    
+  
     
 }
 

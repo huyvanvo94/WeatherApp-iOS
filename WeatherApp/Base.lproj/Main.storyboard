@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--Cities-->
         <scene sceneID="r1o-Gu-l8C">
             <objects>
-                <tableViewController id="0O4-Bu-9vh" customClass="CityTableViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AddCityViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0O4-Bu-9vh" customClass="AddCityViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="OLC-fY-XhZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -41,7 +41,12 @@
                             <outlet property="delegate" destination="0O4-Bu-9vh" id="ETE-T0-QsG"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="n7T-cD-vN1">
+                    <navigationItem key="navigationItem" title="Cities" id="n7T-cD-vN1">
+                        <barButtonItem key="leftBarButtonItem" title="Cities" id="hRQ-Mx-cgX">
+                            <connections>
+                                <action selector="goToForecastPageVC:" destination="0O4-Bu-9vh" id="QaX-ev-VlH"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="+" id="ANE-sy-1NZ">
                             <connections>
                                 <action selector="searchCity:" destination="0O4-Bu-9vh" id="fyh-LN-e6w"/>
@@ -51,24 +56,24 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hxf-VL-bzh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2156" y="-119.1904047976012"/>
+            <point key="canvasLocation" x="-4572" y="-672"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Navigation View Controller-->
         <scene sceneID="PLu-oq-tXK">
             <objects>
-                <navigationController storyboardIdentifier="NavigationController" id="YjD-uG-cnA" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NavigationController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YjD-uG-cnA" customClass="NavigationViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WU7-Co-AWO">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="VaQ-2U-BZO" kind="relationship" relationship="rootViewController" id="8u4-0h-mCn"/>
+                        <segue destination="0O4-Bu-9vh" kind="relationship" relationship="rootViewController" id="nzI-X0-arp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zcs-EX-K4N" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4924" y="59"/>
+            <point key="canvasLocation" x="-5530" y="-672"/>
         </scene>
         <!--Forecast Page View Controller-->
         <scene sceneID="pZZ-s0-tno">
@@ -78,19 +83,19 @@
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="TNL-65-3gE"/>
                         <barButtonItem key="rightBarButtonItem" title="Add City" id="lW4-i6-QKk">
                             <connections>
-                                <segue destination="0O4-Bu-9vh" kind="show" id="zQR-pv-oCd"/>
+                                <segue destination="0O4-Bu-9vh" kind="show" id="v0c-dY-rby"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AhL-1x-TQu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3956" y="-119"/>
+            <point key="canvasLocation" x="-3182" y="-672"/>
         </scene>
-        <!--City Forecast Page Controller-->
+        <!--Weather View Controller-->
         <scene sceneID="kbf-NW-NcX">
             <objects>
-                <viewController storyboardIdentifier="CityForecastPage" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TkP-49-a3k" customClass="CityForecastPageController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TkP-49-a3k" customClass="WeatherViewController" customModule="WeatherApp" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Cag-eX-teT"/>
                         <viewControllerLayoutGuide type="bottom" id="ShU-yZ-yVh"/>
@@ -109,13 +114,17 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="19K-Ca-5A2"/>
                     <connections>
                         <outlet property="cityLabel" destination="dkb-yp-N6x" id="AsH-9S-KQo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lPB-SC-s7H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3162.4000000000001" y="-119.1904047976012"/>
+            <point key="canvasLocation" x="-2857" y="-1012"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="nzI-X0-arp"/>
+    </inferredMetricsTieBreakers>
 </document>

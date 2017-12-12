@@ -8,9 +8,10 @@
 
 import Foundation
 
-struct Place: Equatable, Hashable{
+class Place: NSObject, NSCoding{
+   
     // hash protocol
-    var hashValue: Int{
+    override var hashValue: Int{
         return self.city.hashValue ^ self.latitude.hashValue ^ self.longitude.hashValue &* 16777619
     }
     static func ==(lhs: Place, rhs: Place) -> Bool {
@@ -39,6 +40,33 @@ struct Place: Equatable, Hashable{
         get{
             return "lat=\(self.latitude)&lon=\(self.longitude)"
         }
+    }
+    
+    func save(){
+        
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(self.city, forKey: Keys.City)
+    
+        aCoder.encode(self.latitude, forKey: Keys.lat)
+        aCoder.encode(self.longitude, forKey: Keys.long)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+      
+        self.city = aDecoder.decodeObject(forKey: Keys.City) as! String
+        self.longitude = aDecoder.decodeDouble(forKey: Keys.long)
+        self.latitude = aDecoder.decodeDouble(forKey: Keys.lat)
+        
+    }
+    
+    
+    struct Keys{
+        static let City = "city"
+        static let lat = "lat"
+        static let long = "long"
     }
  
 }

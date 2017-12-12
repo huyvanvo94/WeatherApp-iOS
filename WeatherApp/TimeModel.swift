@@ -15,4 +15,26 @@ class TimeModel{
     var rawOffset: Int?
     var timeZoneName: String?
     
+    init() {
+        
+    }
+ 
+    init?(data: Data){
+  
+        do{
+            let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]
+         
+            if let timeZoneId = json["timeZoneId"] as? String{
+                self.timeZoneId = timeZoneId
+            }
+            
+            if let rawOffSet = json["rawOffset"] as? Int{
+                self.rawOffset = rawOffSet
+            }
+            
+        }catch{
+            
+        }
+    }
+    
 }

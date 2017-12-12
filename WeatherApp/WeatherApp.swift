@@ -4,16 +4,26 @@
 //
 
 import Foundation
+import CoreLocation
 
-final class WeatherApp: NSObject {
+final class WeatherApp: NSObject, CLLocationManagerDelegate {
     private var delegates = [WeatherAppDelegate]()
+    
+
+    lazy var locationManager: CLLocationManager = {
+        let locman = CLLocationManager()
+        locman.delegate = self
+        locman.distanceFilter = 200
+        locman.desiredAccuracy = kCLLocationAccuracyBest
+        return locman
+    }()
+    
+   
+    
+    var location: CLLocation?
     
     var delegate: WeatherAppDelegate?
     var places = [Place]()
-    
-    var todayWeatherDict = [LatLon: TodayWeatherPackage]()
-    var forecastDict = [LatLon: ForecastPackage]()
-    var threeHoursDict = [LatLon: ThreeHoursPackage]()
     
     private var _today = [Place: WeatherModel]()
     private var _three = [Place: [WeatherModel]]()
@@ -21,13 +31,27 @@ final class WeatherApp: NSObject {
 
     static let shared = WeatherApp()
 
-    override private init (){}
+   
+    override private init (){
+        print("WeatherApp Constructor")
+        super.init()
+        self.locationManager.requestAlwaysAuthorization()
+        self.requestLocation()
+    }
+    
+    func requestLocation(){
+        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
+            self.locationManager.requestLocation()
+            
+        }
+    }
     
     func delete(place: Place){
         self._today[place] = nil
         self._three[place] = nil
         self._forecast[place] = nil
         
+      //  self.updateListeners()
     }
     
     func addPlace(_ place: Place){
@@ -39,7 +63,6 @@ final class WeatherApp: NSObject {
             self.fetchWeather(place: place)
             self.fetchForecast(place: place)
             self.fetchThreeHours(place: place)
-            
         }
         
     }
@@ -86,9 +109,7 @@ final class WeatherApp: NSObject {
     }
  
     private func fetchForecast(place: Place){
-        
         let queue = DispatchQueue.global()
-        
         queue.async{
             // string format for weather
             let location = place.openWeatherLocation
@@ -102,64 +123,7 @@ final class WeatherApp: NSObject {
         }
     }
     
-    func fetchWeather(latlon: LatLon, city: String ){
-        let queue = DispatchQueue.global()
-
-        queue.async{
-            // string format for weather
-            let location = latlon.openWeatherLocation
-
-            ApiService.fetchWeather(latlng: location, completion:
-            {(weatherModel: WeatherModel) -> Void in
-
-                weatherModel.city = city
-                weatherModel.lat = latlon.latitude
-                weatherModel.lng = latlon.longitude
-
-                let location = latlon.googleLocation
-                ApiService.fetchTimeZone(googleFormatted: location, completion: {
-                    (timeModel: TimeModel) -> Void in
-                    weatherModel.time_zone_id = timeModel.timeZoneId
-
-                    self.todayWeatherDict[latlon] = TodayWeatherPackage(today: weatherModel)
-
-                })
-            })
-        }
-    }
-
-    func fetchThreeHoursWeather(latlon: LatLon, city: String){
-        let queue = DispatchQueue.global()
-
-        queue.async{
-            let location = latlon.openWeatherLocation
-            ApiService.fetchThreeHours(latlng: location, completion: {
-                (weatherModels: [WeatherModel]) -> Void in
-
-                self.threeHoursDict[latlon] = ThreeHoursPackage(threehours: weatherModels)
-
-            })
-        }
-    }
-
-    func fetchForecast(latlon: LatLon, city: String){
-
-        let queue = DispatchQueue.global()
-
-        queue.async{
-            // string format for weather
-            let location = latlon.openWeatherLocation
-
-            ApiService.fetchForecast(latlng: location, completion: {
-                (weatherModels: [WeatherModel]) -> Void in
-
-                self.forecastDict[latlon] = ForecastPackage(weatherModels: weatherModels)
-
-            })
-        }
-    }
-
-
+  
     func updateListeners(){
         print("updateListeners")
         let queue = DispatchQueue.global()
@@ -170,16 +134,14 @@ final class WeatherApp: NSObject {
                 if let today = self._today[place] {
                    
                     for delegate in self.delegates{
-                        
-                        
-                        
                         DispatchQueue.main.async {
-                            delegate.load(weather: today)
+                            delegate.load(weatherModel: today)
+                          
                             
+                         
                         }
                         
                         DispatchQueue.main.async {
-                            
                             if let three = self._three[place]{
                                 if let forecast = self._forecast[place]{
                                     let weather = Weather(todayWeather: today, threeHoursWeather: three, forecastWeather: forecast)
@@ -205,44 +167,46 @@ final class WeatherApp: NSObject {
         delegates.append(delegate)
         self.updateListeners()
     }
-
-    struct ForecastPackage{
-        var weatherModels: [WeatherModel]
-        var timestamp: TimeInterval
-
-        init(weatherModels: [WeatherModel]) {
-            self.weatherModels = weatherModels
-            self.timestamp = Date().timeIntervalSince1970
-        }
+    public func delete(){
+        
     }
-
-
-   
-    struct TodayWeatherPackage{
-        var weatherModel: WeatherModel
-        var timestamp: TimeInterval
-
-        init(today weatherModel: WeatherModel){
-            self.weatherModel = weatherModel
-            self.timestamp = Date().timeIntervalSince1970
-
-        }
-
+ 
+    public func save(){
+        print("WeatherApp save")
+        let savedData = NSKeyedArchiver.archivedData(withRootObject: self.places)
+        let defaults = UserDefaults.standard
+        defaults.set(savedData, forKey: "places")
     }
-
-    struct ThreeHoursPackage{
-
-        var weatherModels: [WeatherModel]
-        var timestamp: TimeInterval
-
-        init(threehours weatherModels: [WeatherModel]){
-            self.weatherModels = weatherModels
-            self.timestamp = Date().timeIntervalSince1970
+    
+    public func load(){
+        print("WeatherApp load")
+        let defaults = UserDefaults.standard
+        
+        if let savedPlaces = defaults.object(forKey: "places") as? Data {
+            self.places = NSKeyedUnarchiver.unarchiveObject(with: savedPlaces) as! [Place]
+        
+            for place in self.places{
+                self.fetchWeather(place: place)
+                self.fetchForecast(place: place)
+                self.fetchThreeHours(place: place)
+            }
         }
+         
     }
+ 
+    // CLLocationManagerDelegate
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+       
+        print(locations)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+       
+    }
+    
 }
 
-class Weather{
+class Weather: NSObject, Codable{
     
     var todayWeather: WeatherModel
     var threeHoursWeather: [WeatherModel]
@@ -257,17 +221,23 @@ class Weather{
     var city: String?{
         return todayWeather.city
     }
+    
+    static func ==(lhs: Weather, rhs: Weather) -> Bool {
+        
+        return lhs.todayWeather.hashValue == rhs.todayWeather.hashValue
+    }
+    
+    
+    
 }
 
-protocol WeatherAppDelegate: class{
+@objc protocol WeatherAppDelegate: class{
     func load(weather: Weather)
+    func load(weatherModel: WeatherModel)
     
-    func load(weather: WeatherModel)
-
-    func loadTodayWeather(weatherModels: [WeatherModel])
+    @objc optional func foo()
     
-    func loadWeather(weather: WeatherModel)
-
+    
 }
 
 

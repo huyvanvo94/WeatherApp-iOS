@@ -1,5 +1,5 @@
 //
-//  CityTableViewController.swift
+//  AddCityViewController.swift
 //  WeatherApp
 //
 //  Created by Huy Vo on 11/10/17.
@@ -9,47 +9,58 @@
 import UIKit
 import GooglePlaces
 
-class CityTableViewController: UITableViewController, GMSAutocompleteViewControllerDelegate, WeatherAppDelegate {
+class AddCityViewController: UITableViewController, GMSAutocompleteViewControllerDelegate, WeatherAppDelegate {
+    
     func load(weather: Weather){
         
     }
-    func load(weather: WeatherModel) {
+    
+    func load(weatherModel: WeatherModel){
+  
         print("load")
        
-        if let _ = placesWeather.index(of: weather){
+        if let _ = placesWeather.index(of: weatherModel){
             return
         }
         
-        self.placesWeather.append(weather)
+        self.placesWeather.append(weatherModel)
         self.tableView.reloadData()
-        
-        
+
     }
-    
-    var cities = [String]()
-    
-    
+ 
     var placesWeather = [WeatherModel]()
     
     var deleteAtIndex: IndexPath? = nil
     
+    override func loadView() {
+        super.loadView()
+        print("loadView")
+        
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("viewDidLoad")
        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         print("viewWillAppear")
         super.viewWillAppear(animated)
+        
+        WeatherApp.shared.requestLocation()
         WeatherApp.shared.add(delegate: self)
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tableView.reloadData), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTable), userInfo: nil, repeats: true)
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-        
+
+
         
         
     }
@@ -98,15 +109,8 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("row selected: \(indexPath.row)")
      
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "NavigationController") as? UINavigationController{
-            
-            let app = UIApplication.shared.delegate as! AppDelegate
-            
-            app.index = indexPath.row 
-           // vc.index = indexPath.row
-            self.present(vc, animated: true, completion: nil)
-        }
-         
+       
+        self.goToVC(with: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -121,7 +125,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         if editingStyle == .delete {
             deleteAtIndex = indexPath
             if let index = deleteAtIndex?.row{
-                confirmDelete(cities[index])
+               // confirmDelete(cities[index])
             }
         }
     }
@@ -143,7 +147,7 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         if let indexPath = deleteAtIndex {
            // self.tableView.deleteRows(at: [indexPath], with: .fade)
             deleteAtIndex = nil
-            cities.remove(at: indexPath.row)
+         //   cities.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
                        
         }
@@ -196,8 +200,35 @@ class CityTableViewController: UITableViewController, GMSAutocompleteViewControl
         
     }
     
- 
+    @IBAction func goToForecastPageVC(_ sender: Any) {
+        
+        if WeatherApp.shared.places.isEmpty{
+            return
+        }
+        
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
+            
+         
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
+    }
+    
 
+    @objc func updateTable(){
+
+        self.tableView.reloadData()
+
+
+    }
+    
+    func goToVC(with index: Int){
+        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
+            
+            vc.index = index 
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 }
 
 extension UIViewController {
