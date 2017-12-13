@@ -33,9 +33,8 @@ struct ApiService{
                    
                     if httpResponse.statusCode == 200 {
                         
-                        if let data = data{
-                           
-                            if let timeModel = JsonParser.parseTime(data: data){
+                        if let data = data{ 
+                            if var timeModel = JsonParser.parseTime(data: data){
                                 if let completion = completion{
                                     completion(timeModel)
                                 }
@@ -66,7 +65,7 @@ struct ApiService{
                     if httpResponse.statusCode == 200 {
                         
                         if let data = data{
-                            if let weatherModels = JsonParser.parseThreeHours(data: data){
+                            if var weatherModels = JsonParser.parseThreeHours(data: data){
                                 if let completion = completion{
                                     
                                     completion(weatherModels)
@@ -100,7 +99,7 @@ struct ApiService{
                     // request has been successful
                     if httpResponse.statusCode == 200 {
                         if let data = data{
-                            if let weatherModels = JsonParser.parseForecast(data: data){
+                            if var weatherModels = JsonParser.parseForecast(data: data){
                                 if let completion = completion{
                                     completion(weatherModels)
                                 }
@@ -138,7 +137,7 @@ struct ApiService{
                     if theHttpResponse.statusCode == 200 {
                         
                         if let data = data{
-                            if let weatherModel = JsonParser.parseWeather(today: data){
+                            if var weatherModel = JsonParser.parseWeather(today: data){
                                 if let completion = completion{
                                     completion(weatherModel)
                                 }

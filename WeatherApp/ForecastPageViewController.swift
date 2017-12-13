@@ -8,21 +8,55 @@
 //
 import UIKit
 
-class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class ForecastPageViewController: UIPageViewController{
+    
+    lazy var settingButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    
+    var index: Int = -1
+    var weatherModels = [WeatherModel]()
     var pages = [UIViewController]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("ForecastPageView viewDidLoad")
-        
-        print("ForecastPageView \(pages.count)")
         
         self.dataSource = self
-        
-        asyncLoadDataToUI()
-        
+         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewWillAppear")
+
+        if WeatherApp.shared.places.isEmpty{
+            let emptyPage = self.createCityForecastPage(weather: nil)
+            self.pages.append(emptyPage)
+            setViewToPage(index: 0)
+        }else{
+            WeatherApp.shared.add(delegate: self)
+        }
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("viewWillDisappear")
+        
+        WeatherApp.shared.remove(delegate: self)
+    }
+
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        print("viewDidAppear")
+  
+    
+        setViewToPage(index: self.index)
+    }
+
     func setViewToPage(index: Int){
         guard index >= 0 && index < pages.count else{
             return
@@ -33,11 +67,10 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    func createCityForecastPage(weatherBuilder: WeatherForecastBuilder?) -> CityForecastPageController{
-        let page = storyboard?.instantiateViewController(withIdentifier: "CityForecastPage") as! CityForecastPageController
+    func createCityForecastPage(weather: Weather?) -> WeatherViewController {
+        let page = storyboard?.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
         
-        print("Weather Builder City: \(weatherBuilder?.cityName)")
-        page.weatherBuilder = weatherBuilder
+        page.weather = weather
         
         return page
     }
@@ -48,7 +81,9 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    
+}
+
+extension ForecastPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController)-> UIViewController? {
         
@@ -75,36 +110,35 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     func presentationIndex(for pageViewController: UIPageViewController)-> Int {
         return pages.count
     }
-    
-    func emptyPage(){
+}
+
+// MARK: - WeatherAppDelegate
+extension ForecastPageViewController: WeatherAppDelegate{
+    func load(weather: Weather){
+        print("fvc load")
         
-    }
-    
-    // load weather data to UI
-    func asyncLoadDataToUI(){
+        self.weatherModels.append(weather.todayWeather)
+        self.pages.append(self.createCityForecastPage(weather: weather))
         
-        print("asyncLoaDataToUI")
-        
-        let todayWeather = TodayWeatherContainer.shared
-        
-        // if is empty, UI needs to tell user that currently containers no weather
-        if todayWeather.dict.isEmpty{
-            
-            let emptyPage = self.createCityForecastPage(weatherBuilder: nil)
-            self.pages.append(emptyPage)
-            setViewToPage(index: 0)
+        if self.index == -1{
             return
         }
         
-        let app = UIApplication.shared.delegate as! AppDelegate
-        let index = app.index
-        
-        let queue = LoadWeatherQueue(vc: self, index: index)
-        queue.asyncStart()
-        
+        if self.weatherModels.count - 1 == self.index{
+            self.setViewToPage(index: self.index)
+            self.index = -1 
+        }else if WeatherApp.shared.places.count == 1{
+            self.setViewToPage(index: 0)
+        }
+    }
+    
+    func load(weatherModel: WeatherModel){
         
     }
     
-    
+    func remove(at index: Int){
+        self.weatherModels.remove(at: index)
+        self.pages.remove(at: index)
+        
+    }
 }
-

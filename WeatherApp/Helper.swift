@@ -145,7 +145,7 @@ struct JsonParser{
         }
     }
     
-    static func parseTime( data: Data) -> TimeModel?{
+    static func parseTime(data: Data) -> TimeModel?{
         print("parseTime")
         do{
             let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as! [String: Any]

@@ -8,8 +8,8 @@
 
 import Foundation
 
-class WeatherModel: NSObject, Codable{
-    // maybe i should change data type
+class WeatherModel: Equatable{
+    
     var dt: Double?
     
     var humidity: Double?
@@ -36,10 +36,8 @@ class WeatherModel: NSObject, Codable{
     var time_zone_id: String?
     
     var main: String?
-    
     var icon: String?
     
-
     var day_of_the_week: String?{
         get{
             if let _ = time_zone_id{
@@ -81,20 +79,14 @@ class WeatherModel: NSObject, Codable{
         }
     }
     
-    // a variable to print out about class
-    override var description: String{
-        return ""
-    } 
-}
+    
+    static func == (lhs: WeatherModel, rhs: WeatherModel) -> Bool {
+        return lhs.city == rhs.city && lhs.lng == rhs.lng && lhs.lat == rhs.lat
+    }
+    
+  
+ 
 
-class ThreeHoursModel: WeatherModel{
     
 }
 
-class ForecastModel: WeatherModel{
-    
-}
-
-class TodayWeatherModel: WeatherModel{
-    
-}
