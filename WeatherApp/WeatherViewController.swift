@@ -9,19 +9,9 @@
 import UIKit
 import CoreLocation
 
-class WeatherViewController: UIViewController, CLLocationManagerDelegate{
+class WeatherViewController: UIViewController{
     
-    var currentLocation: CLLocation?
-  //  let locationManager = CLLocationManager()
-    
-    lazy var locman: CLLocationManager = {
-        let locman = CLLocationManager()
-        locman.delegate = self
-        locman.distanceFilter = 200
-        locman.desiredAccuracy = kCLLocationAccuracyBest
-        return locman
-    }()
-
+ 
     var weather: Weather?
     
     @IBOutlet weak var cityLabel: UILabel!
@@ -29,26 +19,16 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
+    
+        
+ 
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         loadToView()
-        
-        locman.requestAlwaysAuthorization()
-        
-        self.requestLocation()
     }
-    
-    func requestLocation(){
-        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
-            locman.requestLocation()
-        }
-    }
-    
-    private func initLocation(){
-        /*
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestLocation()*/
-    }
+ 
 
     func loadToView(){
         
@@ -74,6 +54,25 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate{
         // Dispose of any resources that can be recreated.
     }
     
+    func determineLocation(with location: CLLocation){
+        let geocoder = CLGeocoder()
+        
+        
+        geocoder.reverseGeocodeLocation(location) { (placemarksArray, error) in
+            
+            if (placemarksArray?.count)! > 0 {
+                
+                let placemark = placemarksArray?.first
+                
+                let text = "\(placemark!.locality)"
+                
+                
+                print(text)
+            }
+        }
+    }
+    
+    /*
     func locationManager(_ manager:CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("locations = \(locations)")
         
@@ -115,6 +114,6 @@ class WeatherViewController: UIViewController, CLLocationManagerDelegate{
         
  
         print("Error")
-    }
+    }*/
     
 }

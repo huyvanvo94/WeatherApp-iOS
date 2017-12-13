@@ -35,11 +35,15 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         super.init()
          
         self.locationManager.requestAlwaysAuthorization()
+       
         self.requestLocation()
       
       //  self.locationManager.startMonitoringSignificantLocationChanges()
         
+    }
     
+    func stopLocationService(){
+        self.locationManager.stopMonitoringSignificantLocationChanges()
     }
     
     func fetchCurrentLocation(){
@@ -63,6 +67,13 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
        
         let place = self.places[index]
         self.delete(place: place)
+        
+        DispatchQueue.main.async {
+            for delegate in self.delegates{
+               
+                delegate.remove(at: index)
+            }
+        }
     }
     
     func delete(place: Place){
@@ -75,6 +86,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         self._forecast[place] = nil
         
         self.save()
+        
+     
         
       //  self.updateListeners()
     }
@@ -266,8 +279,8 @@ protocol WeatherAppDelegate: class{
     func load(weather: Weather)
     func load(weatherModel: WeatherModel)
     
-    
- 
+    func remove(at index: Int)
+
 }
 
 

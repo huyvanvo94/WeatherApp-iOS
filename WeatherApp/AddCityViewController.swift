@@ -10,27 +10,25 @@ import UIKit
 import GooglePlaces
 
 
-class AddCityViewController: UITableViewController, GMSAutocompleteViewControllerDelegate, WeatherAppDelegate {
+class AddCityViewController: UITableViewController, GMSAutocompleteViewControllerDelegate {
     
-    func load(weather: Weather){
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicatorView.hidesWhenStopped = true
         
-    }
-    
-    func load(weatherModel: WeatherModel){
-  
-        print("load")
-        
-        if self.placesWeather.contains(where: {$0.city == weatherModel.city}){
-            return
+        // Set Center
+        var center = self.view.center
+        if let navigationBarFrame = self.navigationController?.navigationBar.frame {
+            center.y -= (navigationBarFrame.origin.y + navigationBarFrame.size.height)
         }
+        activityIndicatorView.center = center
         
-        self.placesWeather.append(weatherModel)
-        self.tableView.reloadData()
-    }
- 
+        self.view.addSubview(activityIndicatorView)
+        return activityIndicatorView
+    }()
+    
     var placesWeather = [WeatherModel]()
-    
-    
+     
     override func loadView() {
         super.loadView()
         print("loadView")
@@ -50,7 +48,8 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         
         WeatherApp.shared.requestLocation()
         WeatherApp.shared.add(delegate: self)
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTable), userInfo: nil, repeats: true)
+        
+        //Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTable), userInfo: nil, repeats: true)
     }
     
     
@@ -107,6 +106,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //print("row selected: \(indexPath.row)")
      
+        print(indexPath.row)
        
         self.goToVC(with: indexPath.row)
     }
@@ -123,7 +123,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         if editingStyle == .delete {
             let index = indexPath.row
             WeatherApp.shared.delete(at: index)
-            placesWeather.remove(at: index)
+           // placesWeather.remove(at: index)
              
         }
     }
@@ -131,10 +131,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     // Handle the user's selection.
     open func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
-        if let activityIndicator = view.viewWithTag(123) as? UIActivityIndicatorView{
-            activityIndicator.startAnimating()
-            activityIndicator.isHidden = false
-        }
+      //  self.activityIndicatorView.startAnimating()
         
         let city = place.name
         
@@ -146,7 +143,6 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         
         dismiss(animated: true, completion: nil)
     }
- 
  
  
     open func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
@@ -168,34 +164,20 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func loadTodayWeather(weatherModels: [WeatherModel]){
-        
-    }
-    
-    func loadWeather(weather: WeatherModel){
-        
-    }
-    
+
     @IBAction func goToForecastPageVC(_ sender: Any) {
         
         if WeatherApp.shared.places.isEmpty{
             return
         }
         
-        if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
-            
-         
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
+        self.goToVC(with: -1)
         
     }
     
 
     @objc func updateTable(){
-
         self.tableView.reloadData()
-
-
     }
     
     func goToVC(with index: Int){
@@ -205,6 +187,31 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+}
+
+extension AddCityViewController: WeatherAppDelegate{
+    func load(weather: Weather){
+        
+    }
+    
+    func remove(at index: Int) {
+        self.placesWeather.remove(at: index)
+        self.tableView.reloadData()
+        
+    }
+    
+    func load(weatherModel: WeatherModel){
+        
+        print("load")
+        
+        if self.placesWeather.contains(where: {$0.city == weatherModel.city}){
+            return
+        }
+        
+        self.placesWeather.append(weatherModel)
+        self.tableView.reloadData()
+    }
+    
 }
 
 extension UIViewController {
@@ -235,6 +242,4 @@ extension UIViewController {
             toastLabel.removeFromSuperview()
         })
     }
-    
-
 }

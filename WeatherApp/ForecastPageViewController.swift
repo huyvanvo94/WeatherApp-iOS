@@ -8,39 +8,17 @@
 //
 import UIKit
 
-class ForecastPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, WeatherAppDelegate {
+class ForecastPageViewController: UIPageViewController{
     
     lazy var settingButton: UIButton = {
-        
         let button = UIButton()
-        
         return button
     }()
     
     var index: Int = -1
-    
     var weatherModels = [WeatherModel]()
     var pages = [UIViewController]()
-   
-    func load(weather: Weather){
-        print("fvc load")
-   
-        self.weatherModels.append(weather.todayWeather)
-        self.pages.append(self.createCityForecastPage(weather: weather))
-        
-        if self.weatherModels.count - 1 == self.index{
-            self.setViewToPage(index: self.index)
-        }else if self.weatherModels.count == WeatherApp.shared.places.count{
-            self.setViewToPage(index: 0)
-        }
-    }
     
-    func load(weatherModel: WeatherModel){
-        
-    }
- 
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,15 +31,14 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         print("viewWillAppear")
 
         if WeatherApp.shared.places.isEmpty{
-          
             let emptyPage = self.createCityForecastPage(weather: nil)
             self.pages.append(emptyPage)
             setViewToPage(index: 0)
         }else{
- 
             WeatherApp.shared.add(delegate: self)
         }
     }
+    
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
@@ -75,8 +52,9 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         super.viewDidAppear(animated)
 
         print("viewDidAppear")
-
-
+  
+    
+        setViewToPage(index: self.index)
     }
 
     func setViewToPage(index: Int){
@@ -103,7 +81,9 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     }
     
     
-    
+}
+
+extension ForecastPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController)-> UIViewController? {
         
@@ -130,7 +110,35 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     func presentationIndex(for pageViewController: UIPageViewController)-> Int {
         return pages.count
     }
-  
-    
 }
 
+// MARK: - WeatherAppDelegate
+extension ForecastPageViewController: WeatherAppDelegate{
+    func load(weather: Weather){
+        print("fvc load")
+        
+        self.weatherModels.append(weather.todayWeather)
+        self.pages.append(self.createCityForecastPage(weather: weather))
+        
+        if self.index == -1{
+            return
+        }
+        
+        if self.weatherModels.count - 1 == self.index{
+            self.setViewToPage(index: self.index)
+            self.index = -1 
+        }else if WeatherApp.shared.places.count == 1{
+            self.setViewToPage(index: 0)
+        }
+    }
+    
+    func load(weatherModel: WeatherModel){
+        
+    }
+    
+    func remove(at index: Int){
+        self.weatherModels.remove(at: index)
+        self.pages.remove(at: index)
+        
+    }
+}
