@@ -9,6 +9,7 @@
 import UIKit
 import GooglePlaces
 
+
 class AddCityViewController: UITableViewController, GMSAutocompleteViewControllerDelegate, WeatherAppDelegate {
     
     func load(weather: Weather){
@@ -18,32 +19,29 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     func load(weatherModel: WeatherModel){
   
         print("load")
-       
-        if let _ = placesWeather.index(of: weatherModel){
+        
+        if self.placesWeather.contains(where: {$0.city == weatherModel.city}){
             return
         }
         
         self.placesWeather.append(weatherModel)
         self.tableView.reloadData()
-
     }
  
     var placesWeather = [WeatherModel]()
     
-    var deleteAtIndex: IndexPath? = nil
     
     override func loadView() {
         super.loadView()
         print("loadView")
-        
-        
+         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("viewDidLoad")
-       
+         
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,35 +121,13 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            deleteAtIndex = indexPath
-            if let index = deleteAtIndex?.row{
-               // confirmDelete(cities[index])
-            }
+            let index = indexPath.row
+            WeatherApp.shared.delete(at: index)
+            placesWeather.remove(at: index)
+             
         }
     }
-    
-    func confirmDelete(_ city: String){
-        let alert = UIAlertController(title: "Delete City", message: "Are you sure you want to delete \(city)?",  preferredStyle: .actionSheet)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: handleDeleteCity)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: handleCancelDelete)
-        alert.addAction(deleteAction)
-        alert.addAction(cancelAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // set variable back to nil
-    func handleCancelDelete(_ alertAction: UIAlertAction!) -> Void{
-        deleteAtIndex = nil
-    }
-    func handleDeleteCity(_ alertAction: UIAlertAction!) -> Void{
-        if let indexPath = deleteAtIndex {
-           // self.tableView.deleteRows(at: [indexPath], with: .fade)
-            deleteAtIndex = nil
-         //   cities.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: .automatic)
-                       
-        }
-    }
+  
     // Handle the user's selection.
     open func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         

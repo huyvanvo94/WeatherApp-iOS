@@ -20,21 +20,18 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
     var index: Int = -1
     
     var weatherModels = [WeatherModel]()
-    
     var pages = [UIViewController]()
    
     func load(weather: Weather){
-        print("load")
-        if let _ = self.weatherModels.index(of: weather.todayWeather){
-            return
-        }
-        
+        print("fvc load")
+   
         self.weatherModels.append(weather.todayWeather)
         self.pages.append(self.createCityForecastPage(weather: weather))
         
         if self.weatherModels.count - 1 == self.index{
-        
             self.setViewToPage(index: self.index)
+        }else if self.weatherModels.count == WeatherApp.shared.places.count{
+            self.setViewToPage(index: 0)
         }
     }
     
@@ -48,8 +45,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         super.viewDidLoad()
         
         self.dataSource = self
-        
-
+         
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +53,7 @@ class ForecastPageViewController: UIPageViewController, UIPageViewControllerData
         print("viewWillAppear")
 
         if WeatherApp.shared.places.isEmpty{
+          
             let emptyPage = self.createCityForecastPage(weather: nil)
             self.pages.append(emptyPage)
             setViewToPage(index: 0)

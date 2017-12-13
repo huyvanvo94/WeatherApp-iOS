@@ -122,10 +122,9 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1854" />
     <option name="y" value="23" />
     <option name="width" value="1237" />
-    <option name="height" value="918" />
+    <option name="height" value="723" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -235,15 +234,15 @@
       <updated>1512775697069</updated>
       <workItem from="1512775702215" duration="1662000" />
       <workItem from="1512988131251" duration="955000" />
-      <workItem from="1513067226340" duration="195000" />
+      <workItem from="1513067226340" duration="708000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2812000" />
+    <option name="totallyTimeSpent" value="3325000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1854" y="23" width="1237" height="918" extended-state="0" />
+    <frame x="0" y="23" width="1237" height="723" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />

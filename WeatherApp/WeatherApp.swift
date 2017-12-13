@@ -7,8 +7,9 @@ import Foundation
 import CoreLocation
 
 final class WeatherApp: NSObject, CLLocationManagerDelegate {
-    private var delegates = [WeatherAppDelegate]()
+    fileprivate var fetchLocation = false
     
+    private var delegates = [WeatherAppDelegate]()
 
     lazy var locationManager: CLLocationManager = {
         let locman = CLLocationManager()
@@ -18,10 +19,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         return locman
     }()
     
-   
-    
     var location: CLLocation?
-    
     var delegate: WeatherAppDelegate?
     var places = [Place]()
     
@@ -31,12 +29,24 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
 
     static let shared = WeatherApp()
 
-   
     override private init (){
+        
         print("WeatherApp Constructor")
         super.init()
+         
         self.locationManager.requestAlwaysAuthorization()
         self.requestLocation()
+      
+      //  self.locationManager.startMonitoringSignificantLocationChanges()
+        
+    
+    }
+    
+    func fetchCurrentLocation(){
+     
+        self.fetchLocation = true
+        self.requestLocation()
+        
     }
     
     func requestLocation(){
@@ -46,25 +56,40 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func delete(at index: Int){
+        if index < 0 || index > places.count{
+            return
+        }
+       
+        let place = self.places[index]
+        self.delete(place: place)
+    }
+    
     func delete(place: Place){
+        if let index = places.index(of: place ){
+            places.remove(at: index)
+        }
+        
         self._today[place] = nil
         self._three[place] = nil
         self._forecast[place] = nil
+        
+        self.save()
         
       //  self.updateListeners()
     }
     
     func addPlace(_ place: Place){
-    
-        if places.doContains(obj: place){
+        if self.places.contains(where: {$0.city == place.city }){
             return
-        }else{
-            places.append(place)
-            self.fetchWeather(place: place)
-            self.fetchForecast(place: place)
-            self.fetchThreeHours(place: place)
         }
-        
+  
+        places.append(place)
+        self.save()
+        self.fetchWeather(place: place)
+        self.fetchForecast(place: place)
+        self.fetchThreeHours(place: place)
+    
     }
     
     private func fetchWeather(place: Place){
@@ -75,7 +100,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
             let location = place.openWeatherLocation
             
             ApiService.fetchWeather(latlng: location, completion:
-                {(weatherModel: WeatherModel) -> Void in
+                {(weatherModel) -> Void in
                     
                     weatherModel.city = place.city
                     weatherModel.lat = place.latitude
@@ -168,6 +193,10 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         self.updateListeners()
     }
     public func delete(){
+      
+        let defaults = UserDefaults.standard
+        defaults.removeObject(forKey: "places")
+        
         
     }
  
@@ -176,6 +205,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         let savedData = NSKeyedArchiver.archivedData(withRootObject: self.places)
         let defaults = UserDefaults.standard
         defaults.set(savedData, forKey: "places")
+        
     }
     
     public func load(){
@@ -191,7 +221,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
                 self.fetchThreeHours(place: place)
             }
         }
-         
+        
+     
     }
  
     // CLLocationManagerDelegate
@@ -206,7 +237,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
     
 }
 
-class Weather: NSObject, Codable{
+struct Weather{
     
     var todayWeather: WeatherModel
     var threeHoursWeather: [WeatherModel]
@@ -224,20 +255,19 @@ class Weather: NSObject, Codable{
     
     static func ==(lhs: Weather, rhs: Weather) -> Bool {
         
-        return lhs.todayWeather.hashValue == rhs.todayWeather.hashValue
+        return lhs.todayWeather == rhs.todayWeather
     }
     
     
     
 }
 
-@objc protocol WeatherAppDelegate: class{
+protocol WeatherAppDelegate: class{
     func load(weather: Weather)
     func load(weatherModel: WeatherModel)
     
-    @objc optional func foo()
     
-    
+ 
 }
 
 

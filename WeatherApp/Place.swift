@@ -14,9 +14,9 @@ class Place: NSObject, NSCoding{
     override var hashValue: Int{
         return self.city.hashValue ^ self.latitude.hashValue ^ self.longitude.hashValue &* 16777619
     }
+    
     static func ==(lhs: Place, rhs: Place) -> Bool {
-        
-        return lhs.city == rhs.city
+        return lhs.city == rhs.city && lhs.latitude == rhs.latitude && rhs.longitude == lhs.longitude
     }
     
     
