@@ -56,9 +56,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
-
-
-        
+ 
         
     }
     

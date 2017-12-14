@@ -12,6 +12,12 @@ class NavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationBar.barTintColor = UIColor(rgb: 0x4286f4)
+        
+        let textAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        
+        self.navigationBar.titleTextAttributes = textAttributes
        
         self.goToListView()
 
