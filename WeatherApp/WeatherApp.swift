@@ -53,6 +53,28 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         
     }
     
+    func determineLocation(with location: CLLocation){
+        let geocoder = CLGeocoder()
+        
+        
+        geocoder.reverseGeocodeLocation(location) { (placemarksArray, error) in
+            
+            if (placemarksArray?.count)! > 0 {
+                
+                let placemark = placemarksArray?.first
+                
+                let text = "\(placemark!.locality)"
+                
+                
+                if let city = placemark?.locality{
+                    let place = Place(city: city, longitude: location.coordinate.longitude as Double, latitude: location.coordinate.latitude as Double)
+                    
+                    self.addPlace(place)
+                }
+            }
+        }
+    }
+    
     func requestLocation(){
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
             self.locationManager.requestLocation()
@@ -68,15 +90,15 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         let place = self.places[index]
         self.delete(place: place)
         
+        // notify listeners
         DispatchQueue.main.async {
             for delegate in self.delegates{
-               
                 delegate.remove(at: index)
             }
         }
     }
     
-    func delete(place: Place){
+    private func delete(place: Place){
         if let index = places.index(of: place ){
             places.remove(at: index)
         }
@@ -102,7 +124,6 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         self.fetchWeather(place: place)
         self.fetchForecast(place: place)
         self.fetchThreeHours(place: place)
-    
     }
     
     private func fetchWeather(place: Place){
@@ -260,25 +281,27 @@ struct Weather{
         self.todayWeather = todayWeather
         self.threeHoursWeather = threeHoursWeather
         self.forecastWeather = forecastWeather
+        
     }
     
     var city: String?{
         return todayWeather.city
     }
     
+    var timeZoneId: String?{
+        return todayWeather.time_zone_id
+    }
+    
     static func ==(lhs: Weather, rhs: Weather) -> Bool {
         
         return lhs.todayWeather == rhs.todayWeather
     }
-    
-    
-    
+     
 }
 
 protocol WeatherAppDelegate: class{
     func load(weather: Weather)
-    func load(weatherModel: WeatherModel)
-    
+    func load(weatherModel: WeatherModel) 
     func remove(at index: Int)
 
 }
