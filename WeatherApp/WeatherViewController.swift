@@ -14,8 +14,14 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var collectionView: UICollectionView!
     
     var weather: Weather?
+    @IBOutlet weak var cityLabel: CustomSubLabel!
+    @IBOutlet weak var currentTempLabel: TempLabel!
+    @IBOutlet weak var localTimeLabel: CustomSubLabel!
+    @IBOutlet weak var minMaxTempLabel: CustomSubLabel!
+    @IBOutlet weak var conditionLabel: CustomSubLabel!
     
-    @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var tableView: UITableView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,8 +57,22 @@ class WeatherViewController: UIViewController{
             cityLabel.sizeToFit()
             cityLabel.text = city
             cityLabel.adjustsFontSizeToFitWidth = true
-            cityLabel.textAlignment = .center
+            cityLabel.textAlignment = .left
         }
+       localTimeLabel.text = today.local_date
+       localTimeLabel.textAlignment = .right
+        
+        if let currentTemp = today.temp{
+            let tempString = String(Int(currentTemp))
+            currentTempLabel.text = String.toTemperature(value: tempString)
+        }
+        
+      minMaxTempLabel.text = "Min: \(String.toTemperature(value: String(Int(today.temp_min!)))) Max: \(String.toTemperature(value: String(Int(today.temp_max!))))"
+        
+        if let condition = today.main{
+            conditionLabel.text = condition
+        }
+ 
     }
     
     private func load(threeHours: [WeatherModel], timeZone: String){
