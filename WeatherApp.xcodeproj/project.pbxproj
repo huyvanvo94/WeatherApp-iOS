@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F9B14D91FE2E43A00DE4F36 /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14D81FE2E43A00DE4F36 /* CityCell.swift */; };
+		3F9B14DB1FE2E7F900DE4F36 /* CustomSubLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14DA1FE2E7F900DE4F36 /* CustomSubLabel.swift */; };
+		3F9B14DD1FE2E97E00DE4F36 /* UIViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14DC1FE2E97E00DE4F36 /* UIViewFactory.swift */; };
+		3F9B14DF1FE2E9A400DE4F36 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14DE1FE2E9A400DE4F36 /* CustomLabel.swift */; };
+		3F9B14E11FE2EFC000DE4F36 /* TempLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14E01FE2EFC000DE4F36 /* TempLabel.swift */; };
 		5F09056D363313FD4C9D90A9 /* WeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0900F360F930C820B8440F /* WeatherApp.swift */; };
 		8F13D2A11FAD34C1001BC21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13D2A01FAD34C1001BC21C /* AppDelegate.swift */; };
 		8F13D2A61FAD34C1001BC21C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F13D2A41FAD34C1001BC21C /* Main.storyboard */; };
@@ -52,6 +57,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3F9B14D81FE2E43A00DE4F36 /* CityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
+		3F9B14DA1FE2E7F900DE4F36 /* CustomSubLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSubLabel.swift; sourceTree = "<group>"; };
+		3F9B14DC1FE2E97E00DE4F36 /* UIViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewFactory.swift; sourceTree = "<group>"; };
+		3F9B14DE1FE2E9A400DE4F36 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
+		3F9B14E01FE2EFC000DE4F36 /* TempLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempLabel.swift; sourceTree = "<group>"; };
 		5F0900F360F930C820B8440F /* WeatherApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherApp.swift; sourceTree = "<group>"; };
 		695416772AA8A659D78594A1 /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		8F13D29D1FAD34C1001BC21C /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +209,11 @@
 			isa = PBXGroup;
 			children = (
 				8FFD19801FE2DD010019BD50 /* ThreeHoursCollectionViewCell.swift */,
+				3F9B14D81FE2E43A00DE4F36 /* CityCell.swift */,
+				3F9B14DA1FE2E7F900DE4F36 /* CustomSubLabel.swift */,
+				3F9B14DC1FE2E97E00DE4F36 /* UIViewFactory.swift */,
+				3F9B14DE1FE2E9A400DE4F36 /* CustomLabel.swift */,
+				3F9B14E01FE2EFC000DE4F36 /* TempLabel.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -430,6 +445,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F9B14DB1FE2E7F900DE4F36 /* CustomSubLabel.swift in Sources */,
+				3F9B14D91FE2E43A00DE4F36 /* CityCell.swift in Sources */,
 				8F31F7A21FB6665600C4CEE3 /* AddCityViewController.swift in Sources */,
 				8FF8951A1FDE7F560004EAC5 /* Place.swift in Sources */,
 				8FD2FCE51FB8F7AA0035410B /* Constants.swift in Sources */,
@@ -441,6 +458,9 @@
 				8F9367951FBBAD66007716E5 /* DateHelper.swift in Sources */,
 				8F13D2A91FAD34C1001BC21C /* WeatherApp.xcdatamodeld in Sources */,
 				8FC009771FB36F1600365C33 /* Helper.swift in Sources */,
+				3F9B14DF1FE2E9A400DE4F36 /* CustomLabel.swift in Sources */,
+				3F9B14E11FE2EFC000DE4F36 /* TempLabel.swift in Sources */,
+				3F9B14DD1FE2E97E00DE4F36 /* UIViewFactory.swift in Sources */,
 				8F44CCE91FDF62E900B7047D /* NavigationViewController.swift in Sources */,
 				8F13D2A11FAD34C1001BC21C /* AppDelegate.swift in Sources */,
 				8FD2FCE71FB902B20035410B /* Logger.swift in Sources */,

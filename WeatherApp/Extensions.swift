@@ -43,3 +43,19 @@ extension UIColor {
         )
     }
 }
+
+extension String{
+    static func toTemperature(value: String) -> String{
+        return "\(value)\u{00B0}"
+    }
+    
+    
+}
+
+extension Double{
+    static func toCelsius(value: Double) -> Double{
+        return (value - 32.0)/(1.8)
+    }
+    
+}
+

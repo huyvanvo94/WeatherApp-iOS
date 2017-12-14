@@ -110,9 +110,19 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LabelCell", for: indexPath) as! CityCell
+        
+        let index = indexPath.row
+        
+        cell.cityName.text = self.placesWeather[index].city ?? "No Name"
+        if let temp = self.placesWeather[index].temp{
+            let tempString = String(Int(temp))
+            cell.currentTemp.text = String.toTemperature(value: tempString)
+        }
+        //cell.currentTemp.text = "\(self.placesWeather[index].temp?.rounded())"
+        cell.localTime.text = self.placesWeather[index].local_time
     
-        cell.textLabel?.text = self.placesWeather[indexPath.row].city ?? "No Name"
+        //cell.textLabel?.text = self.placesWeather[indexPath.row].city ?? "No Name"
       
         return cell
     }
