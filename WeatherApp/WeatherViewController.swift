@@ -11,7 +11,8 @@ import CoreLocation
 
 class WeatherViewController: UIViewController{
     
- 
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var weather: Weather?
     
     @IBOutlet weak var cityLabel: UILabel!
@@ -20,8 +21,9 @@ class WeatherViewController: UIViewController{
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
     
-        
- 
+        /*
+        collectionView.delegate = self
+        collectionView.dataSource = self*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -34,17 +36,30 @@ class WeatherViewController: UIViewController{
         
         if let weather = self.weather{
             
-            if let city = weather.city{
-
-                cityLabel.sizeToFit()
-                cityLabel.text = city
-                cityLabel.adjustsFontSizeToFitWidth = true
-                cityLabel.textAlignment = .center
+            if let timeZone = self.weather?.todayWeather.time_zone_id{
+                
+                self.load(today: weather.todayWeather)
+                self.load(forecast: weather.forecastWeather, timeZone: timeZone)
+                self.load(threeHours: weather.threeHoursWeather, timeZone: timeZone)
             }
-
-        }else{
-            
+             
         }
+        
+    }
+    private func load(today: WeatherModel){
+        if let city = today.city{
+            cityLabel.sizeToFit()
+            cityLabel.text = city
+            cityLabel.adjustsFontSizeToFitWidth = true
+            cityLabel.textAlignment = .center
+        }
+    }
+    
+    private func load(threeHours: [WeatherModel], timeZone: String){
+        
+    }
+    
+    private func load(forecast: [WeatherModel], timeZone: String){
         
     }
     
@@ -116,4 +131,47 @@ class WeatherViewController: UIViewController{
         print("Error")
     }*/
     
+    var test = ["a","b", "c"]
 }
+
+//ThreeHoursCell
+
+extension WeatherViewController: UICollectionViewDataSource{
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreeHoursCell", for: indexPath as IndexPath) as! ThreeHoursCollectionViewCell
+        
+        
+        cell.example.text = "example"
+        
+     
+        return cell
+    }
+  
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.test.count
+    }
+}
+
+/*
+
+extension WeatherViewController : UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerRow:CGFloat = 4
+        let hardCodedPadding:CGFloat = 5
+        let itemWidth = (collectionView.bounds.width / itemsPerRow) - hardCodedPadding
+        let itemHeight = collectionView.bounds.height - (2 * hardCodedPadding)
+        return CGSize(width: itemWidth, height: itemHeight)
+    }
+    
+}*/
+
+/*
+extension WeatherViewController: UICollectionViewDelegate{
+    
+}*/

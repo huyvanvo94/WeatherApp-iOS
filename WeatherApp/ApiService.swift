@@ -33,8 +33,9 @@ struct ApiService{
                    
                     if httpResponse.statusCode == 200 {
                         
-                        if let data = data{ 
-                            if var timeModel = JsonParser.parseTime(data: data){
+                        if let data = data{
+                            // Optional Binding 
+                            if let timeModel = JsonParser.parseTime(data: data){
                                 if let completion = completion{
                                     completion(timeModel)
                                 }
@@ -65,7 +66,7 @@ struct ApiService{
                     if httpResponse.statusCode == 200 {
                         
                         if let data = data{
-                            if var weatherModels = JsonParser.parseThreeHours(data: data){
+                            if let weatherModels = JsonParser.parseThreeHours(data: data){
                                 if let completion = completion{
                                     
                                     completion(weatherModels)
@@ -99,7 +100,7 @@ struct ApiService{
                     // request has been successful
                     if httpResponse.statusCode == 200 {
                         if let data = data{
-                            if var weatherModels = JsonParser.parseForecast(data: data){
+                            if let weatherModels = JsonParser.parseForecast(data: data){
                                 if let completion = completion{
                                     completion(weatherModels)
                                 }
@@ -131,13 +132,13 @@ struct ApiService{
             
             let task = session.dataTask(with: urlRequest){
                 (data, response, error) -> Void in
-                print("Api Fetcher task")
+          
                 if let theHttpResponse = response as? HTTPURLResponse{
                     // request has been successful
                     if theHttpResponse.statusCode == 200 {
                         
                         if let data = data{
-                            if var weatherModel = JsonParser.parseWeather(today: data){
+                            if let weatherModel = JsonParser.parseWeather(today: data){
                                 if let completion = completion{
                                     completion(weatherModel)
                                 }
