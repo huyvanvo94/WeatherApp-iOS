@@ -121,7 +121,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
                     
                     let location = place.googleLocation
                     ApiService.fetchTimeZone(googleFormatted: location, completion: {
-                        (timeModel: TimeModel) -> Void in
+                        (timeModel) in
                        
                         weatherModel.time_zone_id = timeModel.timeZoneId
                        
@@ -140,7 +140,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         queue.async{
             let location = place.openWeatherLocation
             ApiService.fetchThreeHours(latlng: location, completion: {
-                (weatherModels: [WeatherModel]) -> Void in
+                (weatherModels) in
                 self._three[place] = weatherModels
             })
         }
@@ -153,7 +153,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
             let location = place.openWeatherLocation
             
             ApiService.fetchForecast(latlng: location, completion: {
-                (weatherModels: [WeatherModel]) -> Void in
+                (weatherModels) in
                 
                 self._forecast[place] = weatherModels
                 
