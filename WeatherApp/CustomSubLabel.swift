@@ -19,6 +19,7 @@ class CustomSubLabel: UILabel{
         self.textColor = UIColor(rgb: 0x8c8c8c)
         self.font = UIFont(name: "Verdana", size: Screen.height * 0.020)
         self.textAlignment = .left
+        self.sizeToFit()
     }
     
     

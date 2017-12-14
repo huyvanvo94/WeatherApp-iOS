@@ -36,6 +36,10 @@ class ForecastPageViewController: UIPageViewController{
             setViewToPage(index: 0)
         }else{
             WeatherApp.shared.add(delegate: self)
+
+            
+        
+            
         }
     }
     
@@ -53,8 +57,8 @@ class ForecastPageViewController: UIPageViewController{
 
         print("viewDidAppear")
   
-    
-        setViewToPage(index: self.index)
+       
+        
     }
 
     func setViewToPage(index: Int){
@@ -125,6 +129,14 @@ extension ForecastPageViewController: WeatherAppDelegate{
         }
         
         if self.weatherModels.count - 1 == self.index{
+            /*
+            if self.index == -1{
+                self.setViewToPage(index: 0)
+            }else{
+                self.setViewToPage(index: self.index)
+                self.index = -1
+            }*/
+            
             self.setViewToPage(index: self.index)
             self.index = -1 
         }else if WeatherApp.shared.places.count == 1{
@@ -139,6 +151,7 @@ extension ForecastPageViewController: WeatherAppDelegate{
     func remove(at index: Int){
         self.weatherModels.remove(at: index)
         self.pages.remove(at: index)
+        
         
     }
 }
