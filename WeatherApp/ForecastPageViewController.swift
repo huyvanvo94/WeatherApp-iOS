@@ -26,6 +26,11 @@ class ForecastPageViewController: UIPageViewController{
          
     }
     
+    override func loadView() {
+        super.loadView()
+        self.view.backgroundColor = UIColor.darkGray
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("viewWillAppear")

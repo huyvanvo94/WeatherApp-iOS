@@ -10,5 +10,9 @@ import UIKit
 
 class ThreeHoursCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var example: UILabel!
+    
+    @IBOutlet weak var hourLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
 }
