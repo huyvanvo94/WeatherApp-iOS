@@ -29,12 +29,17 @@ class WeatherViewController: UIViewController{
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
     
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         
         tableView.delegate = self
         tableView.dataSource = self
+        
+        if WeatherApp.shared.location == nil{
+            WeatherApp.shared.fetchCurrentLocation()
+        }else{
+            self.determineLocation(with: WeatherApp.shared.location!)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +116,6 @@ class WeatherViewController: UIViewController{
                 let placemark = placemarksArray?.first
                 
                 let text = "\(placemark!.locality)"
-                
                 
                 print(text)
             }
@@ -216,6 +220,27 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
         return 1
     }
     
+}
+
+extension WeatherViewController: WeatherAppDelegate{
+    func location(_ location: CLLocation) {
+        self.determineLocation(with: location)
+    }
+    
+    func load(weather: Weather) {
+        
+        
+    }
+    
+    func load(weatherModel: WeatherModel) {
+        
+        
+    }
+    
+    func remove(at index: Int) {
+        
+        
+    }
 }
 
 /*

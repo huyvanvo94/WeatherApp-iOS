@@ -96,6 +96,37 @@
             </objects>
             <point key="canvasLocation" x="-4572" y="-672.41379310344837"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="KEv-aY-oac">
+            <objects>
+                <viewController id="fmT-VU-iW5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sqN-JQ-0Ox"/>
+                        <viewControllerLayoutGuide type="bottom" id="vMO-10-ZyO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AOf-CN-wYH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r16-5D-8Z1">
+                                <rect key="frame" x="204" y="119" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temperature Units" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0kq-bw-XYe">
+                                <rect key="frame" x="55" y="84" width="142" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eaJ-SP-aqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3498" y="-743"/>
+        </scene>
         <!--Navigation View Controller-->
         <scene sceneID="PLu-oq-tXK">
             <objects>
@@ -118,7 +149,11 @@
             <objects>
                 <pageViewController storyboardIdentifier="ForecastPageViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="VaQ-2U-BZO" customClass="ForecastPageViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="HI0-Uu-zww">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="TNL-65-3gE"/>
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="TNL-65-3gE">
+                            <connections>
+                                <segue destination="fmT-VU-iW5" kind="show" id="goy-O5-W4K"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add City" id="lW4-i6-QKk">
                             <connections>
                                 <segue destination="0O4-Bu-9vh" kind="show" id="v0c-dY-rby"/>

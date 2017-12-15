@@ -38,7 +38,9 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
        
         self.requestLocation()
       
-      //  self.locationManager.startMonitoringSignificantLocationChanges()
+        self.locationManager.startMonitoringSignificantLocationChanges()
+        
+        self.fetchCurrentLocation()
         
     }
     
@@ -261,9 +263,26 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
  
     // CLLocationManagerDelegate
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-       
         print(locations)
+        
+        let location = locations[0]
+        
+        self.location = location
+            
+            DispatchQueue.global().async {
+                for delegate in self.delegates{
+                    delegate.location(location)
+                }
+            }
+        
+        if self.fetchLocation{
+            
+            self.determineLocation(with: location)
+            self.fetchLocation = false
+        }
     }
+    
+    
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
        
@@ -303,6 +322,8 @@ protocol WeatherAppDelegate: class{
     func load(weather: Weather)
     func load(weatherModel: WeatherModel) 
     func remove(at index: Int)
+    
+    func location(_ location: CLLocation)
 
 }
 

@@ -7,6 +7,7 @@
 //  Copyright © 2017 Huy Vo. All rights reserved.
 //
 import UIKit
+import CoreLocation
 
 class ForecastPageViewController: UIPageViewController{
     
@@ -123,6 +124,11 @@ extension ForecastPageViewController: UIPageViewControllerDataSource, UIPageView
 
 // MARK: - WeatherAppDelegate
 extension ForecastPageViewController: WeatherAppDelegate{
+    
+    func location(_ location: CLLocation) {
+        
+    }
+
     func load(weather: Weather){
         print("fvc load")
         
