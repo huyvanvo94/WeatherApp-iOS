@@ -8,6 +8,7 @@
 
 import UIKit
 import GooglePlaces
+import CoreLocation
 
 
 class AddCityViewController: UITableViewController, GMSAutocompleteViewControllerDelegate {
@@ -179,7 +180,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
             return
         }
         
-        self.goToVC(with: -1)
+        self.goToVC(with: 0)
         
     }
     
@@ -198,6 +199,11 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
 }
 
 extension AddCityViewController: WeatherAppDelegate{
+    
+    func location(_ location: CLLocation) {
+        
+    }
+    
     func load(weather: Weather){
         
     }

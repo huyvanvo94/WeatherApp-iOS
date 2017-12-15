@@ -14,6 +14,8 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var collectionView: UICollectionView!
     
     var weather: Weather?
+    var threeHoursWeather = [WeatherModel]()
+    var fiveDayForecast = [WeatherModel]()
     @IBOutlet weak var cityLabel: CustomSubLabel!
     @IBOutlet weak var currentTempLabel: TempLabel!
     @IBOutlet weak var localTimeLabel: CustomSubLabel!
@@ -27,9 +29,17 @@ class WeatherViewController: UIViewController{
         super.viewDidLoad()
         print("CityForecastPageController viewDidLoad")
     
-        /*
         collectionView.delegate = self
-        collectionView.dataSource = self*/
+        collectionView.dataSource = self
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        if WeatherApp.shared.location == nil{
+            WeatherApp.shared.fetchCurrentLocation()
+        }else{
+            self.determineLocation(with: WeatherApp.shared.location!)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,11 +86,17 @@ class WeatherViewController: UIViewController{
     }
     
     private func load(threeHours: [WeatherModel], timeZone: String){
+        for model in threeHours{
+            self.threeHoursWeather.append(model)
+        }
+        
         
     }
     
     private func load(forecast: [WeatherModel], timeZone: String){
-        
+        for model in forecast{
+            self.fiveDayForecast.append(model)
+        }
     }
     
     
@@ -100,7 +116,6 @@ class WeatherViewController: UIViewController{
                 let placemark = placemarksArray?.first
                 
                 let text = "\(placemark!.locality)"
-                
                 
                 print(text)
             }
@@ -156,7 +171,7 @@ class WeatherViewController: UIViewController{
 
 //ThreeHoursCell
 
-extension WeatherViewController: UICollectionViewDataSource{
+extension WeatherViewController: UICollectionViewDataSource, UICollectionViewDelegate{
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -165,15 +180,66 @@ extension WeatherViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ThreeHoursCell", for: indexPath as IndexPath) as! ThreeHoursCollectionViewCell
         
+        let threeHours = threeHoursWeather[indexPath.row]
+    
+        threeHours.time_zone_id = weather?.timeZoneId
         
-        cell.example.text = "example"
-        
-     
+        cell.hourLabel.text = threeHours.future_time
+        cell.tempLabel.text = String.toTemperature(value: String(Int(threeHours.temp!)))
+        cell.statusLabel.text = threeHours.main
         return cell
     }
   
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.test.count
+        return self.threeHoursWeather.count
+    }
+}
+
+//FiveDayForecast
+extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
+        return self.fiveDayForecast.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FiveDayForecastCell", for: indexPath) as! FiveDayForecastCell
+        
+        let index = indexPath.row
+        let fiveDay = fiveDayForecast[index]
+        cell.dayLabel.text = fiveDay.day_of_the_week
+        cell.conditionLabel.text = fiveDay.main
+        let tempMinString = String.toTemperature(value: String(Int(fiveDay.temp_min!)))
+        let tempMaxString = String.toTemperature(value: String(Int(fiveDay.temp_max!)))
+        cell.tempRangeLabel.text = "\(tempMinString) - \(tempMaxString)"
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+}
+
+extension WeatherViewController: WeatherAppDelegate{
+    func location(_ location: CLLocation) {
+        self.determineLocation(with: location)
+    }
+    
+    func load(weather: Weather) {
+        
+        
+    }
+    
+    func load(weatherModel: WeatherModel) {
+        
+        
+    }
+    
+    func remove(at index: Int) {
+        
+        
     }
 }
 
@@ -191,7 +257,4 @@ extension WeatherViewController : UICollectionViewDelegateFlowLayout {
     
 }*/
 
-/*
-extension WeatherViewController: UICollectionViewDelegate{
-    
-}*/
+

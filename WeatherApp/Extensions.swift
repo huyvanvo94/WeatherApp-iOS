@@ -59,3 +59,20 @@ extension Double{
     
 }
 
+enum Temperature{
+    case f
+    case c
+    
+    
+    mutating func toggle(){
+        
+        switch self {
+        case .f:
+            self = .c
+        case .c:
+            self = .f
+        default:
+            self = .f
+        }
+    }
+}
