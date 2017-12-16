@@ -21,6 +21,7 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var localTimeLabel: CustomSubLabel!
     @IBOutlet weak var minMaxTempLabel: CustomSubLabel!
     @IBOutlet weak var conditionLabel: CustomSubLabel!
+    @IBOutlet weak var locationLabel: CustomSubLabel!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -50,6 +51,8 @@ class WeatherViewController: UIViewController{
 
     func loadToView(){
         
+        
+        
         if let weather = self.weather{
             
             if let timeZone = self.weather?.todayWeather.time_zone_id{
@@ -72,12 +75,21 @@ class WeatherViewController: UIViewController{
        localTimeLabel.text = today.local_date
        localTimeLabel.textAlignment = .right
         
+        
         if let currentTemp = today.temp{
-            let tempString = String(Int(currentTemp))
-            currentTempLabel.text = String.toTemperature(value: tempString)
+            if currentTempUnit == .c{
+                let tempString = String(Int(Double.toCelsius(value: currentTemp)))
+                currentTempLabel.text = String.toTemperature(value: tempString)
+                minMaxTempLabel.text = "Min: \(String.toTemperature(value: String(Int(Double.toCelsius(value: today.temp_min!))))) Max: \(String.toTemperature(value: String(Int(Double.toCelsius(value: today.temp_max!)))))"
+            }else{
+                let tempString = String(Int(currentTemp))
+                currentTempLabel.text = String.toTemperature(value: tempString)
+                minMaxTempLabel.text = "Min: \(String.toTemperature(value: String(Int(today.temp_min!)))) Max: \(String.toTemperature(value: String(Int(today.temp_max!))))"
+            }
+            
         }
         
-      minMaxTempLabel.text = "Min: \(String.toTemperature(value: String(Int(today.temp_min!)))) Max: \(String.toTemperature(value: String(Int(today.temp_max!))))"
+      
         
         if let condition = today.main{
             conditionLabel.text = condition
@@ -85,18 +97,26 @@ class WeatherViewController: UIViewController{
  
     }
     
+    
     private func load(threeHours: [WeatherModel], timeZone: String){
+      
         for model in threeHours{
+            model.time_zone_id = timeZone
             self.threeHoursWeather.append(model)
         }
+        
+        self.tableView.reloadData()
         
         
     }
     
     private func load(forecast: [WeatherModel], timeZone: String){
         for model in forecast{
+            model.time_zone_id = timeZone
             self.fiveDayForecast.append(model)
         }
+        
+        self.collectionView.reloadData()
     }
     
     
@@ -115,9 +135,13 @@ class WeatherViewController: UIViewController{
                 
                 let placemark = placemarksArray?.first
                 
-                let text = "\(placemark!.locality)"
+                if let text = placemark!.locality{
                 
-                print(text)
+                    if text == self.weather?.todayWeather.city{
+                        self.locationLabel.isHidden = false
+                        self.locationLabel.text = "You are here"
+                    }
+                }
             }
         }
     }
@@ -166,7 +190,6 @@ class WeatherViewController: UIViewController{
         print("Error")
     }*/
     
-    var test = ["a","b", "c"]
 }
 
 //ThreeHoursCell
@@ -185,7 +208,12 @@ extension WeatherViewController: UICollectionViewDataSource, UICollectionViewDel
         threeHours.time_zone_id = weather?.timeZoneId
         
         cell.hourLabel.text = threeHours.future_time
-        cell.tempLabel.text = String.toTemperature(value: String(Int(threeHours.temp!)))
+        if currentTempUnit == .c{
+            cell.tempLabel.text = String.toTemperature(value: String(Int(Double.toCelsius(value: threeHours.temp!))))
+        }else{
+            cell.tempLabel.text = String.toTemperature(value: String(Int(threeHours.temp!)))
+        }
+        
         cell.statusLabel.text = threeHours.main
         return cell
     }
@@ -206,13 +234,22 @@ extension WeatherViewController: UITableViewDelegate, UITableViewDataSource{
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "FiveDayForecastCell", for: indexPath) as! FiveDayForecastCell
         
+        
         let index = indexPath.row
         let fiveDay = fiveDayForecast[index]
         cell.dayLabel.text = fiveDay.day_of_the_week
         cell.conditionLabel.text = fiveDay.main
-        let tempMinString = String.toTemperature(value: String(Int(fiveDay.temp_min!)))
-        let tempMaxString = String.toTemperature(value: String(Int(fiveDay.temp_max!)))
-        cell.tempRangeLabel.text = "\(tempMinString) - \(tempMaxString)"
+        
+        if currentTempUnit == .c{
+            let tempMinString = String.toTemperature(value: String(Int(Double.toCelsius(value: fiveDay.temp_min!))))
+            let tempMaxString = String.toTemperature(value: String(Int(Double.toCelsius(value: fiveDay.temp_max!))))
+            cell.tempRangeLabel.text = "\(tempMinString) - \(tempMaxString)"
+        }else{
+            let tempMinString = String.toTemperature(value: String(Int(fiveDay.temp_min!)))
+            let tempMaxString = String.toTemperature(value: String(Int(fiveDay.temp_max!)))
+            cell.tempRangeLabel.text = "\(tempMinString) - \(tempMaxString)"
+        }
+        
         return cell
     }
     
@@ -227,13 +264,21 @@ extension WeatherViewController: WeatherAppDelegate{
         self.determineLocation(with: location)
     }
     
+    func reload(){
+        print("reload")
+        self.view.reloadInputViews()
+        self.tableView.reloadData()
+    }
+    
     func load(weather: Weather) {
-        
+        self.view.reloadInputViews()
+        self.tableView.reloadData()
         
     }
     
     func load(weatherModel: WeatherModel) {
-        
+        self.view.reloadInputViews()
+        self.tableView.reloadData()
         
     }
     

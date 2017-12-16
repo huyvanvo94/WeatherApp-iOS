@@ -29,6 +29,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     }()
     
     var placesWeather = [WeatherModel]()
+    
      
     override func loadView() {
         super.loadView()
@@ -50,7 +51,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         WeatherApp.shared.requestLocation()
         WeatherApp.shared.add(delegate: self)
         
-        //Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.updateTable), userInfo: nil, repeats: true)
+        startTimer()
     }
     
     
@@ -71,6 +72,12 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
       
+    }
+    
+    //MARK- Actions
+    @IBAction func addCurrentLocation(_ sender: UIBarButtonItem) {
+        print("addCurrentLocation")
+        WeatherApp.shared.fetchCurrentLocation()
     }
     
     @IBAction func searchCity(_ sender: UIBarButtonItem) {
@@ -117,12 +124,17 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         
         cell.cityName.text = self.placesWeather[index].city ?? "No Name"
         if let temp = self.placesWeather[index].temp{
-            let tempString = String(Int(temp))
-            cell.currentTemp.text = String.toTemperature(value: tempString)
+            if currentTempUnit == .c{
+                let tempString = String(Int(Double.toCelsius(value: temp)))
+                cell.currentTemp.text = String.toTemperature(value: tempString)
+            }else{
+                let tempString = String(Int(temp))
+                cell.currentTemp.text = String.toTemperature(value: tempString)
+            }
+            
         }
         //cell.currentTemp.text = "\(self.placesWeather[index].temp?.rounded())"
-        cell.localTime.text = self.placesWeather[index].local_time
-    
+        cell.localTime.text = self.placesWeather[index].city_local_time ?? self.placesWeather[index].local_time
         //cell.textLabel?.text = self.placesWeather[indexPath.row].city ?? "No Name"
       
         return cell
@@ -181,14 +193,20 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
         }
         
         self.goToVC(with: 0)
-        
     }
     
-
     @objc func updateTable(){
         self.tableView.reloadData()
+        
+        startTimer()
     }
     
+    
+    func startTimer(){
+        
+        Timer.scheduledTimer(timeInterval: TimeInterval(Date.timer), target: self, selector: #selector( updateTable), userInfo: nil, repeats: false)
+         
+    }
     func goToVC(with index: Int){
         if let vc = self.storyboard?.instantiateViewController(withIdentifier: "ForecastPageViewController") as? ForecastPageViewController{
             
@@ -202,6 +220,10 @@ extension AddCityViewController: WeatherAppDelegate{
     
     func location(_ location: CLLocation) {
         
+    }
+    
+    func reload(){
+        self.view.reloadInputViews()
     }
     
     func load(weather: Weather){
