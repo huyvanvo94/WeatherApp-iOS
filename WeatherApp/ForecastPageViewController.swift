@@ -36,17 +36,9 @@ class ForecastPageViewController: UIPageViewController{
         super.viewWillAppear(animated)
         print("viewWillAppear")
 
-        if WeatherApp.shared.places.isEmpty{
-            let emptyPage = self.createCityForecastPage(weather: nil)
-            self.pages.append(emptyPage)
-            setViewToPage(index: 0)
-        }else{
-            WeatherApp.shared.add(delegate: self)
-
-            
-        
-            
-        }
+  
+        WeatherApp.shared.add(delegate: self)
+ 
     }
     
     
