@@ -21,6 +21,7 @@ class WeatherViewController: UIViewController{
     @IBOutlet weak var localTimeLabel: CustomSubLabel!
     @IBOutlet weak var minMaxTempLabel: CustomSubLabel!
     @IBOutlet weak var conditionLabel: CustomSubLabel!
+    @IBOutlet weak var locationLabel: CustomSubLabel!
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -49,6 +50,8 @@ class WeatherViewController: UIViewController{
  
 
     func loadToView(){
+        
+        
         
         if let weather = self.weather{
             
@@ -132,9 +135,13 @@ class WeatherViewController: UIViewController{
                 
                 let placemark = placemarksArray?.first
                 
-                let text = "\(placemark!.locality)"
+                if let text = placemark!.locality{
                 
-                print(text)
+                    if text == self.weather?.todayWeather.city{
+                        self.locationLabel.isHidden = false
+                        self.locationLabel.text = "You are here"
+                    }
+                }
             }
         }
     }

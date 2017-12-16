@@ -235,9 +235,16 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3T-eK-Via" customClass="CustomSubLabel" customModule="WeatherApp" customModuleProvider="target">
+                                                <rect key="frame" x="121.5" y="119" width="111.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
+                                            <constraint firstItem="y3T-eK-Via" firstAttribute="centerX" secondItem="xbB-dD-1QW" secondAttribute="centerX" id="0VT-kU-7wo"/>
                                             <constraint firstItem="GK4-HG-uBe" firstAttribute="top" secondItem="dkb-yp-N6x" secondAttribute="bottom" constant="10" id="2Mh-Qj-AgH"/>
                                             <constraint firstItem="Hg8-K6-sRR" firstAttribute="leading" secondItem="dkb-yp-N6x" secondAttribute="trailing" constant="95" id="Ryd-oE-FwU"/>
                                             <constraint firstItem="dkb-yp-N6x" firstAttribute="top" secondItem="xbB-dD-1QW" secondAttribute="top" constant="10" id="SsF-kf-FZ0"/>
@@ -246,6 +253,7 @@
                                             <constraint firstItem="dZx-Ha-O0u" firstAttribute="top" secondItem="GK4-HG-uBe" secondAttribute="bottom" constant="5" id="cFX-eb-gDU"/>
                                             <constraint firstItem="vLN-LB-hmB" firstAttribute="centerX" secondItem="xbB-dD-1QW" secondAttribute="centerX" id="geV-qd-VmY"/>
                                             <constraint firstItem="Hg8-K6-sRR" firstAttribute="top" secondItem="xbB-dD-1QW" secondAttribute="top" constant="10" id="mQz-Gk-Ig8"/>
+                                            <constraint firstItem="y3T-eK-Via" firstAttribute="top" secondItem="vLN-LB-hmB" secondAttribute="bottom" constant="10" id="mwk-Iv-six"/>
                                             <constraint firstItem="dkb-yp-N6x" firstAttribute="leading" secondItem="xbB-dD-1QW" secondAttribute="leading" constant="15" id="qWa-cR-NCD"/>
                                             <constraint firstItem="dZx-Ha-O0u" firstAttribute="centerX" secondItem="xbB-dD-1QW" secondAttribute="centerX" id="rzb-wZ-zMW"/>
                                             <constraint firstAttribute="trailing" secondItem="Hg8-K6-sRR" secondAttribute="trailing" constant="15" id="tn3-DV-2Hl"/>
@@ -374,6 +382,7 @@
                         <outlet property="conditionLabel" destination="dZx-Ha-O0u" id="Qdu-6M-lPr"/>
                         <outlet property="currentTempLabel" destination="GK4-HG-uBe" id="Vwf-eY-Nhz"/>
                         <outlet property="localTimeLabel" destination="Hg8-K6-sRR" id="HAz-JR-2KM"/>
+                        <outlet property="locationLabel" destination="y3T-eK-Via" id="meo-Vq-N87"/>
                         <outlet property="minMaxTempLabel" destination="vLN-LB-hmB" id="jvA-qM-azV"/>
                         <outlet property="tableView" destination="TBu-YJ-nfR" id="uvj-3R-4tT"/>
                     </connections>
