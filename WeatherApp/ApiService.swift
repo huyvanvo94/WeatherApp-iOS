@@ -100,8 +100,20 @@ struct ApiService{
                     // request has been successful
                     if httpResponse.statusCode == 200 {
                         if let data = data{
-                            if let weatherModels = JsonParser.parseForecast(data: data){
+                            if var weatherModels = JsonParser.parseForecast(data: data){
                                 if let completion = completion{
+                                    
+                                    if weatherModels.count != 5{
+                                        let model = weatherModels[0]
+                                        
+                                        if model.isToday{
+                                            weatherModels.removeFirst()
+                                        }else{
+                                            weatherModels.popLast()
+                                        }
+                                        
+                                    }
+                                    
                                     completion(weatherModels)
                                 }
                             }
@@ -114,15 +126,13 @@ struct ApiService{
             
             task.resume()
         }
-
-        
     }
     
     // add function to operation queue
     // func to fetch weather
     static func fetchWeather(latlng location: String, completion: ((WeatherModel) -> () )?){
         let url = "http://api.openweathermap.org/data/2.5/weather?\(location)&units=imperial&appid=\(openWeatherMapKey)"
-        
+        print("url: \(url)")
         let requestURL = URL(string: url)
         
         if let theRequestURL = requestURL{

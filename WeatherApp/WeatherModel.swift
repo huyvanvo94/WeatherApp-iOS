@@ -10,6 +10,17 @@ import Foundation
 
 class WeatherModel: Equatable{
     
+    var isToday: Bool{
+        get{
+            
+            if let dt = self.dt{
+                return DateHelper.isToday(dt: dt)
+            }
+            
+            return false
+        }
+    }
+    
     var dt: Double?
     
     var humidity: Double?
@@ -40,6 +51,7 @@ class WeatherModel: Equatable{
     
     var day_of_the_week: String?{
         get{
+            
             if let _ = time_zone_id{
                 if let _  = dt{
                     return DateHelper.getDayOfWeek(dt: dt!, timeZoneId: time_zone_id!)
@@ -70,6 +82,17 @@ class WeatherModel: Equatable{
                 }
             }
             return nil
+        }
+    }
+    
+    var city_local_time: String?{
+        get{
+            if let timeZone = time_zone_id{
+                return DateHelper.getLocalTime(dt: Date().timeIntervalSince1970, timeZoneId: timeZone)
+                
+            }else{
+                return nil
+            }
         }
     }
     

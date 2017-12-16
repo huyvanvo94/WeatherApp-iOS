@@ -13,6 +13,7 @@
 		3F9B14DF1FE2E9A400DE4F36 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14DE1FE2E9A400DE4F36 /* CustomLabel.swift */; };
 		3F9B14E11FE2EFC000DE4F36 /* TempLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14E01FE2EFC000DE4F36 /* TempLabel.swift */; };
 		3F9B14E31FE33E3200DE4F36 /* FiveDayForecastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9B14E21FE33E3200DE4F36 /* FiveDayForecastCell.swift */; };
+		3FE73D631FE5B0C90093E4DF /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE73D621FE5B0C90093E4DF /* SettingsViewController.swift */; };
 		5F09056D363313FD4C9D90A9 /* WeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0900F360F930C820B8440F /* WeatherApp.swift */; };
 		8F13D2A11FAD34C1001BC21C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F13D2A01FAD34C1001BC21C /* AppDelegate.swift */; };
 		8F13D2A61FAD34C1001BC21C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F13D2A41FAD34C1001BC21C /* Main.storyboard */; };
@@ -30,7 +31,6 @@
 		8F44CCE91FDF62E900B7047D /* NavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F44CCE81FDF62E900B7047D /* NavigationViewController.swift */; };
 		8F9367951FBBAD66007716E5 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F9367941FBBAD66007716E5 /* DateHelper.swift */; };
 		8FC009771FB36F1600365C33 /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC009761FB36F1600365C33 /* Helper.swift */; };
-		8FD2FCE31FB8F71A0035410B /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE21FB8F71A0035410B /* LocationService.swift */; };
 		8FD2FCE51FB8F7AA0035410B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE41FB8F7AA0035410B /* Constants.swift */; };
 		8FD2FCE71FB902B20035410B /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE61FB902B20035410B /* Logger.swift */; };
 		8FD2FCE91FB91FF50035410B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8FD2FCE81FB91FF50035410B /* GoogleService-Info.plist */; };
@@ -64,6 +64,7 @@
 		3F9B14DE1FE2E9A400DE4F36 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		3F9B14E01FE2EFC000DE4F36 /* TempLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempLabel.swift; sourceTree = "<group>"; };
 		3F9B14E21FE33E3200DE4F36 /* FiveDayForecastCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveDayForecastCell.swift; sourceTree = "<group>"; };
+		3FE73D621FE5B0C90093E4DF /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5F0900F360F930C820B8440F /* WeatherApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherApp.swift; sourceTree = "<group>"; };
 		695416772AA8A659D78594A1 /* Pods-WeatherApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WeatherApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-WeatherApp/Pods-WeatherApp.release.xcconfig"; sourceTree = "<group>"; };
 		8F13D29D1FAD34C1001BC21C /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,7 +89,6 @@
 		8F44CCE81FDF62E900B7047D /* NavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationViewController.swift; sourceTree = "<group>"; };
 		8F9367941FBBAD66007716E5 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		8FC009761FB36F1600365C33 /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
-		8FD2FCE21FB8F71A0035410B /* LocationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		8FD2FCE41FB8F7AA0035410B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		8FD2FCE61FB902B20035410B /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		8FD2FCE81FB91FF50035410B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -160,7 +160,6 @@
 			isa = PBXGroup;
 			children = (
 				8F13D2A01FAD34C1001BC21C /* AppDelegate.swift */,
-				8FD2FCE21FB8F71A0035410B /* LocationService.swift */,
 				8FF8951D1FDE87DC0004EAC5 /* Extensions.swift */,
 				8FD2FCE41FB8F7AA0035410B /* Constants.swift */,
 				8FC009761FB36F1600365C33 /* Helper.swift */,
@@ -228,6 +227,7 @@
 				8F31F7AB1FB69B1A00C4CEE3 /* WeatherViewController.swift */,
 				8F31F7A11FB6665600C4CEE3 /* AddCityViewController.swift */,
 				8F44CCE81FDF62E900B7047D /* NavigationViewController.swift */,
+				3FE73D621FE5B0C90093E4DF /* SettingsViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -456,7 +456,6 @@
 				8F31F7AC1FB69B1A00C4CEE3 /* WeatherViewController.swift in Sources */,
 				8F2553741FB7D1AC000BD0A6 /* TimeModel.swift in Sources */,
 				8FFD19811FE2DD010019BD50 /* ThreeHoursCollectionViewCell.swift in Sources */,
-				8FD2FCE31FB8F71A0035410B /* LocationService.swift in Sources */,
 				8F2553761FB7EDF3000BD0A6 /* ApiService.swift in Sources */,
 				8F9367951FBBAD66007716E5 /* DateHelper.swift in Sources */,
 				3F9B14E31FE33E3200DE4F36 /* FiveDayForecastCell.swift in Sources */,
@@ -470,6 +469,7 @@
 				8FD2FCE71FB902B20035410B /* Logger.swift in Sources */,
 				8F2553721FB7D036000BD0A6 /* WeatherModel.swift in Sources */,
 				8FF8951E1FDE87DC0004EAC5 /* Extensions.swift in Sources */,
+				3FE73D631FE5B0C90093E4DF /* SettingsViewController.swift in Sources */,
 				8F31F7AA1FB69A9500C4CEE3 /* ForecastPageViewController.swift in Sources */,
 				5F09056D363313FD4C9D90A9 /* WeatherApp.swift in Sources */,
 			);

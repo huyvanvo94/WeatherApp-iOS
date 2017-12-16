@@ -27,7 +27,9 @@ class DateHelper{
         dateFormatter.timeZone = TimeZone(identifier: timeZoneId)
         return dateFormatter.string(from: date as Date)
     }
-    
+    static func isToday(dt: TimeInterval) -> Bool{
+        return numberFromToday(dt: dt) == 0
+    }
     static func isTomorrow(dt: TimeInterval ) -> Bool{
         return numberFromToday(dt: dt) == 1
     }
@@ -47,7 +49,7 @@ class DateHelper{
     static func getDayOfWeek(dt: TimeInterval, timeZoneId: String) -> String{
         let date = Date(timeIntervalSince1970: dt)
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.dateFormat = "EEE"
         dateFormatter.timeZone = TimeZone(identifier: timeZoneId)
         return dateFormatter.string(from: date as Date)
     }

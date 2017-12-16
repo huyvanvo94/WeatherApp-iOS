@@ -6,6 +6,8 @@
 import Foundation
 import CoreLocation
 
+var currentTempUnit: Temperature = .f
+
 final class WeatherApp: NSObject, CLLocationManagerDelegate {
     fileprivate var fetchLocation = false
     
@@ -40,7 +42,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
       
         self.locationManager.startMonitoringSignificantLocationChanges()
         
-        self.fetchCurrentLocation()
+     //   self.fetchCurrentLocation()
         
     }
     
@@ -49,13 +51,15 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
     }
     
     func fetchCurrentLocation(){
+        print("fetch")
      
         self.fetchLocation = true
-        self.requestLocation()
+        self.locationManager.requestLocation()
         
     }
     
     func determineLocation(with location: CLLocation){
+        print("determineLocation")
         let geocoder = CLGeocoder()
         
         
@@ -69,10 +73,21 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
                 
                 
                 if let city = placemark?.locality{
+                    print("City: \(city)")
                     let place = Place(city: city, longitude: location.coordinate.longitude as Double, latitude: location.coordinate.latitude as Double)
                     
                     self.addPlace(place)
                 }
+            }
+        }
+    }
+    
+    func reloadDelegates(){
+        print("reload delegates")
+        DispatchQueue.global().async {
+            
+            for delegate in self.delegates{
+                delegate.reload()
             }
         }
     }
@@ -265,21 +280,24 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print(locations)
         
-        let location = locations[0]
-        
-        self.location = location
+     
+            let location = locations[0]
+            
+            self.location = location
             
             DispatchQueue.global().async {
                 for delegate in self.delegates{
                     delegate.location(location)
                 }
             }
-        
-        if self.fetchLocation{
             
-            self.determineLocation(with: location)
-            self.fetchLocation = false
-        }
+            if self.fetchLocation{
+                
+                self.determineLocation(with: location)
+                self.fetchLocation = false
+            }
+     
+        
     }
     
     
@@ -319,6 +337,8 @@ struct Weather{
 }
 
 protocol WeatherAppDelegate: class{
+    func reload()
+    
     func load(weather: Weather)
     func load(weatherModel: WeatherModel) 
     func remove(at index: Int)

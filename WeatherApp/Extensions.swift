@@ -9,6 +9,17 @@
 import Foundation
 import UIKit
 
+extension Date{
+    
+    static var timer: Int{
+        return 60 - Date.currentSecond
+    }
+    
+    static var currentSecond: Int{
+        return Calendar.current.component(.second, from: Date())
+    }
+}
+
 extension UIViewController{
    
     func hideKeyboardWhenTappedAround() {
@@ -46,7 +57,13 @@ extension UIColor {
 
 extension String{
     static func toTemperature(value: String) -> String{
-        return "\(value)\u{00B0}"
+        if currentTempUnit == .c{
+            
+            return "\(value)\u{00B0} C"
+        }else{
+            return "\(value)\u{00B0} F"
+        }
+        
     }
     
     

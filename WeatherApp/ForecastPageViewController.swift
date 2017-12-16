@@ -120,6 +120,10 @@ extension ForecastPageViewController: WeatherAppDelegate{
     func location(_ location: CLLocation) {
         
     }
+    
+    func reload() {
+        
+    }
 
     func load(weather: Weather){
         print("fvc load")
