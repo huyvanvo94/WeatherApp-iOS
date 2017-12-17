@@ -85,7 +85,7 @@ struct ApiService{
     }
     
     static func fetchForecast(latlng location: String, completion: (([WeatherModel]) -> () )?){
-        let url = "http://api.openweathermap.org/data/2.5/forecast/daily?\(location)&mode=json&units=imperial&cnt=7&appid=\(openWeatherMapKey)"
+        let url = "http://api.openweathermap.org/data/2.5/forecast/daily?\(location)&mode=json&units=imperial&cnt=6&appid=\(openWeatherMapKey)"
         
         let requestURL = URL(string: url)
         
@@ -103,7 +103,7 @@ struct ApiService{
                             if var weatherModels = JsonParser.parseForecast(data: data){
                                 if let completion = completion{
                                     
-                                    if weatherModels.count != 5{
+                                    if weatherModels.count != 4{
                                         let model = weatherModels[0]
                                         
                                         if model.isToday{
