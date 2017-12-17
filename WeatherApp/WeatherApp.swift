@@ -244,22 +244,25 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         self.updateListeners()
     }
     public func delete(){
-      
+      /*
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "places")
-        
+        */
         
     }
  
     public func save(){
+        /*
         print("WeatherApp save")
         let savedData = NSKeyedArchiver.archivedData(withRootObject: self.places)
         let defaults = UserDefaults.standard
         defaults.set(savedData, forKey: "places")
+ */
         
     }
     
     public func load(){
+        /*
         print("WeatherApp load")
         let defaults = UserDefaults.standard
         
@@ -272,7 +275,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
                 self.fetchThreeHours(place: place)
             }
         }
-        
+        */
      
     }
  
