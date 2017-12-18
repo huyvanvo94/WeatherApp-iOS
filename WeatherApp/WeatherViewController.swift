@@ -99,6 +99,7 @@ class WeatherViewController: UIViewController{
     
     
     private func load(threeHours: [WeatherModel], timeZone: String){
+        self.threeHoursWeather.removeAll()
       
         for model in threeHours{
             model.time_zone_id = timeZone
@@ -111,6 +112,9 @@ class WeatherViewController: UIViewController{
     }
     
     private func load(forecast: [WeatherModel], timeZone: String){
+        
+        self.fiveDayForecast.removeAll()
+        
         for model in forecast{
             model.time_zone_id = timeZone
             self.fiveDayForecast.append(model)
@@ -146,50 +150,7 @@ class WeatherViewController: UIViewController{
         }
     }
     
-    /*
-    func locationManager(_ manager:CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("locations = \(locations)")
-        
-        let location = locations[0]
-        self.currentLocation = location
-        
-       
-        print(location.coordinate.latitude)
-        print(location.coordinate.longitude)
-        
-      
-        let q = DispatchQueue.global()
-        q.async {
-            
-            
-            let geocoder = CLGeocoder()
-            
-            
-            geocoder.reverseGeocodeLocation(location) { (placemarksArray, error) in
-                
-                if (placemarksArray?.count)! > 0 {
-                    
-                    let placemark = placemarksArray?.first
-                    
-                    let text = "\(placemark!.locality)"
-                    
-                    
-                    print(text)
-                }
-            }
-        }
-        
-        
-        
-        
-    }
  
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        
- 
-        print("Error")
-    }*/
-    
 }
 
 //ThreeHoursCell
@@ -265,20 +226,15 @@ extension WeatherViewController: WeatherAppDelegate{
     }
     
     func reload(){
-        print("reload")
-        self.view.reloadInputViews()
-        self.tableView.reloadData()
-    }
+     }
     
     func load(weather: Weather) {
-        self.view.reloadInputViews()
-        self.tableView.reloadData()
+       
         
     }
     
     func load(weatherModel: WeatherModel) {
-        self.view.reloadInputViews()
-        self.tableView.reloadData()
+     
         
     }
     
