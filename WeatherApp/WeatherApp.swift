@@ -95,7 +95,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
     func requestLocation(){
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse{
             self.locationManager.requestLocation()
-            
+        }else if CLLocationManager.authorizationStatus() == .authorizedAlways{
+             self.locationManager.requestLocation()
         }
     }
     
