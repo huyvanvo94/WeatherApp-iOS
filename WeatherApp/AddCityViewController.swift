@@ -76,7 +76,9 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     
     //MARK- Actions
     @IBAction func addCurrentLocation(_ sender: UIBarButtonItem) {
-        print("addCurrentLocation")
+ 
+       
+        self.displayAnimateSuccess()
         WeatherApp.shared.fetchCurrentLocation()
     }
     
@@ -110,10 +112,7 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //print("row selected: \(indexPath.row)")
-     
-        print(indexPath.row)
-       
+        
         self.goToVC(with: indexPath.row)
     }
     
@@ -168,7 +167,8 @@ class AddCityViewController: UITableViewController, GMSAutocompleteViewControlle
  
     open func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
      
-        showToast(message: "cannot fetch weather")
+        
+    
     }
     
     // User canceled the operation.
@@ -259,23 +259,5 @@ extension UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
-    
-    func showToast(message : String) {
-        
-        let toastLabel = UILabel(frame: CGRect(x: self.view.frame.size.width/2 - 75, y: self.view.frame.size.height-100, width: 150, height: 35))
-        toastLabel.backgroundColor = UIColor.black.withAlphaComponent(0.6)
-        toastLabel.textColor = UIColor.white
-        toastLabel.textAlignment = .center;
-        toastLabel.font = UIFont(name: "Montserrat-Light", size: 12.0)
-        toastLabel.text = message
-        toastLabel.alpha = 1.0
-        toastLabel.layer.cornerRadius = 10;
-        toastLabel.clipsToBounds  =  true
-        self.view.addSubview(toastLabel)
-        UIView.animate(withDuration: 4.0, delay: 0.1, options: .curveEaseOut, animations: {
-            toastLabel.alpha = 0.0
-        }, completion: {(isCompleted) in
-            toastLabel.removeFromSuperview()
-        })
-    }
+  
 }

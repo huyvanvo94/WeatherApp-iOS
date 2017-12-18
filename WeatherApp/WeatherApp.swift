@@ -16,8 +16,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
     lazy var locationManager: CLLocationManager = {
         let locman = CLLocationManager()
         locman.delegate = self
-        locman.distanceFilter = 200
-        locman.desiredAccuracy = kCLLocationAccuracyBest
+        locman.distanceFilter = 100
+        locman.desiredAccuracy = kCLLocationAccuracyKilometer
         return locman
     }()
     
@@ -36,12 +36,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         print("WeatherApp Constructor")
         super.init()
          
-        self.locationManager.requestAlwaysAuthorization()
-       
-        self.requestLocation()
-      
-        self.locationManager.startMonitoringSignificantLocationChanges()
-        
+        self.locationManager.requestWhenInUseAuthorization()
+     
      //   self.fetchCurrentLocation()
         
     }
@@ -245,25 +241,28 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         self.updateListeners()
     }
     public func delete(){
-      /*
+        /*
+   
         let defaults = UserDefaults.standard
-        defaults.removeObject(forKey: "places")
-        */
+        defaults.removeObject(forKey: "places")*/
+     
         
     }
  
     public func save(){
+   
         /*
         print("WeatherApp save")
         let savedData = NSKeyedArchiver.archivedData(withRootObject: self.places)
         let defaults = UserDefaults.standard
-        defaults.set(savedData, forKey: "places")
- */
+        defaults.set(savedData, forKey: "places")*/
+ 
         
     }
     
     public func load(){
         /*
+        
         print("WeatherApp load")
         let defaults = UserDefaults.standard
         
@@ -275,8 +274,8 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
                 self.fetchForecast(place: place)
                 self.fetchThreeHours(place: place)
             }
-        }
-        */
+        }*/
+     
      
     }
  
