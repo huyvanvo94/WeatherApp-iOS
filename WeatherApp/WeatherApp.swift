@@ -18,6 +18,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         locman.delegate = self
         locman.distanceFilter = 100
         locman.desiredAccuracy = kCLLocationAccuracyKilometer
+    
         return locman
     }()
     
@@ -37,7 +38,9 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
         super.init()
          
         self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startMonitoringSignificantLocationChanges()
      
+        
      //   self.fetchCurrentLocation()
         
     }
@@ -64,10 +67,7 @@ final class WeatherApp: NSObject, CLLocationManagerDelegate {
             if (placemarksArray?.count)! > 0 {
                 
                 let placemark = placemarksArray?.first
-                
-                let text = "\(placemark!.locality)"
-                
-                
+              
                 if let city = placemark?.locality{
                     print("City: \(city)")
                     let place = Place(city: city, longitude: location.coordinate.longitude as Double, latitude: location.coordinate.latitude as Double)
