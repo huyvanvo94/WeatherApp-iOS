@@ -17,12 +17,7 @@ class SettingsViewController: UIViewController{
     
     override func loadView() {
         super.loadView()
-        switch currentTempUnit{
-        case .c:
-            settingsSwitch.selectedSegmentIndex = 1
-        case .f:
-            settingsSwitch.selectedSegmentIndex = 2
-        }
+     
         print("loadView")
         
     }
@@ -30,6 +25,13 @@ class SettingsViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         print("viewDidLoad")
+        
+        switch currentTempUnit{
+        case .c:
+            settingsSwitch.selectedSegmentIndex = 1
+        case .f:
+            settingsSwitch.selectedSegmentIndex = 2
+        }
         
     }
     

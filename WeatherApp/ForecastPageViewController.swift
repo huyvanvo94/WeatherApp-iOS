@@ -128,6 +128,10 @@ extension ForecastPageViewController: WeatherAppDelegate{
     func load(weather: Weather){
         print("fvc load")
         
+        if self.weatherModels.contains(where:{ $0.city == weather.city }){
+            return
+        }
+        
         self.weatherModels.append(weather.todayWeather)
         self.pages.append(self.createCityForecastPage(weather: weather))
         
