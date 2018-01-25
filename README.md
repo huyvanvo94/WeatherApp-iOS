@@ -14,6 +14,8 @@
 
 <h1> Screen Shots </h1>
 
+<div style="display: inline-block;">
+
 <img height="400" width="200" src="screenshots/1.PNG">
 <img src="screenshots/2.PNG">
 
@@ -21,6 +23,8 @@
 
 <img src="screenshots/4.PNG">
 
+
+</div>
 
 
  
